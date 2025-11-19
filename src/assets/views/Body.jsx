@@ -475,7 +475,7 @@ function Body() {
               </div>
               <span className="flex flex-col space-y-4">
                 <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
-                  Font End App
+                  Front End App
                 </h1>
                 <p className="font-bold text-white">
                   {" "}
