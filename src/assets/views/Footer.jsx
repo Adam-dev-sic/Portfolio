@@ -57,7 +57,7 @@ function Footer() {
                 : "opacity-0"
             }`}
           >
-            Adamforbusiness@gmail.com
+            Adamforbusiness01@gmail.com
           </h1>
         </div>
         <div

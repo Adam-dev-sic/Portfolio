@@ -22,7 +22,9 @@
   transition: transform 0.3s ease, transform-origin 0s linear 0s;
   border-radius: var(--radius-2xl);
 }
-
+* {
+  font-family: "KaTeX_Caligraphic", serif !important;
+}
 .underline-anim:hover::after {
   transform: scaleX(1);
   transform-origin: left;

@@ -101,7 +101,7 @@ function Body() {
             </div>
             <div
               id="About me card"
-              className="text-white lg:w-[50%] w-full p-10 h-full text-center"
+              className="text-white lg:w-[55%] w-full p-10 h-full text-center"
             >
               {" "}
               <span className="flex flex-col space-y-2 ">
@@ -109,7 +109,7 @@ function Body() {
                   {" "}
                   Who<span className="text-red-900 font-black"> I'm I</span>
                 </h1>
-                <p className="text-lg">
+                <p className="text-lg font-bold">
                   Hi, My name is{" "}
                   <span className="text-red-900 font-black">Adam</span>, a very
                   passionate and ambitious{" "}
@@ -128,7 +128,9 @@ function Body() {
                   </span>{" "}
                   industry I learned many skills throughout my journey and I
                   will handle any task given to me and adapt no matter the
-                  difficulty.
+                  difficulty, I will help you get a fully <span className="font-black"> Dynamic,Functioning Appealing Website </span> 
+                  that will make you <span className="font-black drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] border-b border-white"> reach the results and  vision you are Dreaming Of. </span>  <br />
+                  <div className="text-gray-600 font-semibold mt-1">Make Your Dreams Come True!</div>
                 </p>
               </span>
             </div>
