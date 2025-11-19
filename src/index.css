@@ -1,0 +1,46 @@
+@import "tailwindcss";
+@plugin "@midudev/tailwind-animations";
+
+.stair-shape {
+  float: left;
+
+  height: 10rem;
+  shape-outside: polygon(0 0, 100% 0, 0% 100%);
+}
+
+.underline-anim::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 4px;
+  width: 100%;
+  border-radius: 9%;
+  background: darkred;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease, transform-origin 0s linear 0s;
+  border-radius: var(--radius-2xl);
+}
+
+.underline-anim:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+.group:hover .underline-anim::after {
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.group:not(:hover) .underline-anim::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+.underline-anim:not(:hover)::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+.line-anim {
+  transform: scaleX(1);
+}
