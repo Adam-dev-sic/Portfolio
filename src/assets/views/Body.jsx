@@ -1,4 +1,3 @@
-"use client";
 import React, { useEffect, useRef, useState } from "react";
 
 function useInView(threshold = 0.1) {
@@ -63,7 +62,7 @@ const PROJECTS = [
   {
     title: "Fashionist",
     href: null,
-    image: "/images/fashionist.png", // replace with real image
+    image: "/images/fashionist.png",
     description:
       "A full-featured e-commerce platform selling clothing, built end-to-end with payment integration, an admin dashboard, product management, order tracking, and user authentication. Focused on a clean shopping experience with real-world functionality.",
     tech: [
@@ -126,7 +125,6 @@ function ProjectRow({ project, index, visible }) {
           src={project.image}
           alt={project.title}
           onError={(e) => {
-            // Fallback placeholder if image not found
             e.target.style.background = "#1a1a2e";
             e.target.style.minHeight = "200px";
             e.target.src =
@@ -147,6 +145,129 @@ function ProjectRow({ project, index, visible }) {
           </h1>
         )}
       </div>
+    </div>
+  );
+}
+
+// ─── Service Modal ────────────────────────────────────────────────────────────
+function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect, emailSubject, emailBody, accentFrom, accentTo }) {
+  if (!isOpen) return null;
+
+  const mailtoLink = `mailto:adamforbusiness01@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+  return (
+    <div
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
+      style={{ animation: "backdropIn 0.35s ease forwards" }}
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
+
+      {/* Modal card */}
+      <div
+        className="relative z-10 w-[92%] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 shadow-2xl flex flex-col"
+        style={{
+          background: "linear-gradient(160deg, #0d1117 0%, #0A0E16 60%, #110a0e 100%)",
+          animation: "modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
+        }}
+      >
+        {/* Glow top bar */}
+        <div
+          className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
+          style={{ background: `linear-gradient(90deg, transparent, ${accentFrom}, ${accentTo}, transparent)` }}
+        />
+
+        {/* Header */}
+        <div className="px-8 pt-8 pb-6 border-b border-white/5">
+          <div className="flex items-start justify-between gap-4">
+            <div className="flex items-center gap-4">
+              {/* Icon bubble */}
+              <div
+                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+                style={{ background: "rgba(127,29,29,0.25)", border: "1px solid rgba(127,29,29,0.4)" }}
+              >
+                {icon}
+              </div>
+              <div>
+                <h2 className="text-2xl font-black text-white leading-tight">{title}</h2>
+                <p className="text-sm text-gray-400 mt-0.5 font-medium">{tagline}</p>
+              </div>
+            </div>
+            {/* Close X */}
+            <button
+              onClick={onClose}
+              className="text-gray-600 hover:text-white transition-colors duration-200 hover:cursor-pointer mt-1 flex-shrink-0"
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Features */}
+        <div className="px-8 py-6 flex flex-col gap-3 flex-1">
+          {features.map((f, i) => (
+            <div
+              key={i}
+              className="flex items-start gap-3 group"
+              style={{ animation: `featureIn 0.35s ease ${0.1 + i * 0.06}s both` }}
+            >
+              {/* Icon pill */}
+              <span className="mt-0.5 text-base flex-shrink-0">{f.icon}</span>
+              <div>
+                <span className="text-white font-bold text-sm">{f.title}</span>
+                {f.desc && <p className="text-gray-400 text-sm mt-0.5 font-medium">{f.desc}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* "Perfect for" strip */}
+        <div className="mx-8 mb-6 rounded-xl p-4" style={{ background: "rgba(127,29,29,0.1)", border: "1px solid rgba(127,29,29,0.2)" }}>
+          <p className="text-xs font-black uppercase tracking-widest text-red-800 mb-1">Perfect for</p>
+          <p className="text-gray-300 text-sm font-medium">{perfect}</p>
+        </div>
+
+        {/* Actions */}
+        <div className="px-8 pb-8 flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 h-11 rounded-xl border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm font-bold transition-all duration-200 hover:cursor-pointer"
+          >
+            Close
+          </button>
+          <a
+            href={mailtoLink}
+            className="flex-1 h-11 rounded-xl bg-red-900 hover:bg-red-800 text-white text-sm font-black flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            style={{ boxShadow: "0 0 20px rgba(127,29,29,0.4)" }}
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            Order Now
+          </a>
+        </div>
+      </div>
+
+      {/* Keyframe styles */}
+      <style>{`
+        @keyframes backdropIn {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
+        @keyframes modalIn {
+          from { opacity: 0; transform: scale(0.88) translateY(24px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes featureIn {
+          from { opacity: 0; transform: translateX(-10px); }
+          to   { opacity: 1; transform: translateX(0); }
+        }
+      `}</style>
     </div>
   );
 }
@@ -507,23 +628,6 @@ function Body() {
               </span>
               <div className="w-full flex items-center justify-center">
                 <button onClick={() => setFirstProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
-                <div className={`fixed top-0 will-change-transform left-0 opacity-100 z-9999 w-full h-screen bg-black/60 items-center justify-center animate-zoom-in animate-duration-600 ${firstProject ? "flex z-50" : "hidden"}`}>
-                  <div className={`h-[80%] w-[80%] opacity-100 z-899 will-change-transform overflow-auto lg:w-[60%] lg:h-[70%] xl:w-[40%] rounded-2xl xl:h-[90%] lg:p-25 bg-[#0A0E16] flex flex-col space-y-10 p-6 animate-expand-vertically animate-duration-600 animate-delay-500 border border-gray-800 ${firstProject ? "z-50" : "z-30"}`}>
-                    <h1 className="text-4xl font-black text-center text-red-900">Front-End Application</h1>
-                    <span className="text-white text-lg font-black space-y-6">
-                      <h3>● 🖥️ Fully responsive layouts</h3>
-                      <h3>● 🎨 Tailwind-powered styling</h3>
-                      <h3>● ✨ Sleek animations with Framer Motion or CSS</h3>
-                      <h3>● 🧩 Component-based, reusable UI</h3>
-                      <h3>● ⚡ Fast loading times + optimized assets</h3>
-                      <h3>● 🔗 Seamless integration with backend APIs (if provided)</h3>
-                      <h1 className="text-xl font-black text-center mt-10">Perfect for: landing pages, portfolios, product UIs, marketing sites, modern dashboards.</h1>
-                    </span>
-                    <div className="flex items-center justify-center space-x-4">
-                      <button onClick={() => setFirstProject(false)} className="w-40 h-12 xl:w-50 text-xl font-black bg-red-900 hover:bg-red-950 focus:bg-red-950 text-white rounded-full hover:cursor-pointer">Close</button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -544,23 +648,6 @@ function Body() {
               </span>
               <div className="w-full flex items-center justify-center">
                 <button onClick={() => setSecondProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
-                <div className={`fixed top-0 left-0 w-full h-full bg-black/60 items-center justify-center animate-zoom-in animate-duration-600 ${secondProject ? "flex z-50" : "hidden"}`}>
-                  <div className="h-[80%] w-[80%] opacity-100! overflow-auto lg:w-[60%] lg:h-[70%] xl:w-[40%] rounded-2xl xl:h-[90%] lg:p-25 z-50 bg-[#0A0E16] flex flex-col space-y-10 p-6 animate-expand-vertically animate-duration-600 animate-delay-500">
-                    <h1 className="text-4xl font-black text-center text-red-900">Full Stack Application</h1>
-                    <span className="text-white text-lg font-black space-y-6">
-                      <h3>● 📱 Modern, responsive UI with smooth UX</h3>
-                      <h3>● 🔒 Secure backend built with industry-standard best practices</h3>
-                      <h3>● 🛠️ API design & integration</h3>
-                      <h3>● 🗄️ Database setup & optimization</h3>
-                      <h3>● ☁️ Deployment, hosting, and environment configuration</h3>
-                      <h3>● 🧹 Clean and maintainable codebase ready for future scaling</h3>
-                      <h1 className="text-xl font-black text-center mt-10">Perfect for: startups, SaaS products, dashboards, admin panels, business apps, and custom tools.</h1>
-                    </span>
-                    <div className="flex items-center justify-center space-x-4">
-                      <button onClick={() => setSecondProject(false)} className="w-40 h-12 xl:w-50 text-xl font-black bg-red-900 hover:bg-red-950 focus:bg-red-950 text-white rounded-full hover:cursor-pointer">Close</button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -581,23 +668,6 @@ function Body() {
               </span>
               <div className="w-full flex items-center justify-center">
                 <button onClick={() => setThirdProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
-                <div className={`fixed top-0 left-0 w-full h-full bg-black/60 items-center justify-center animate-zoom-in animate-duration-600 ${thirdProject ? "flex" : "hidden"}`}>
-                  <div className="h-[80%] w-[80%] opacity-100! overflow-auto lg:w-[60%] lg:h-[70%] xl:w-[40%] rounded-2xl xl:h-[90%] lg:p-25 z-50 bg-[#0A0E16] flex flex-col space-y-10 p-6 animate-expand-vertically animate-duration-600 animate-delay-500">
-                    <h1 className="text-4xl font-black text-center text-red-900">Back-End Application</h1>
-                    <span className="text-white text-lg font-black space-y-6">
-                      <h3>● 🔁 REST or GraphQL APIs</h3>
-                      <h3>● 🛡️ Authentication & security (JWT, OAuth, role systems)</h3>
-                      <h3>● 🗂️ Database design (SQL or NoSQL)</h3>
-                      <h3>● 🤖 Server-side logic & automation</h3>
-                      <h3>● 🌐 Third-party API integrations</h3>
-                      <h3>● 🚀 Deployment & server setup</h3>
-                      <h1 className="text-xl font-black text-center mt-10">Perfect for: complex logic systems, API-only projects, databases, SaaS backends, and service infrastructures.</h1>
-                    </span>
-                    <div className="flex items-center justify-center space-x-4">
-                      <button onClick={() => setThirdProject(false)} className="w-40 h-12 xl:w-50 text-xl font-black bg-red-900 hover:bg-red-950 focus:bg-red-950 text-white rounded-full hover:cursor-pointer">Close</button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -618,27 +688,101 @@ function Body() {
               </span>
               <div className="w-full flex items-center justify-center">
                 <button onClick={() => setFourthProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
-                <div className={`fixed top-0 left-0 w-full h-full bg-black/60 items-center justify-center animate-zoom-in animate-duration-600 ${fourthProject ? "flex" : "hidden"}`}>
-                  <div className="h-[80%] w-[80%] opacity-100! overflow-auto lg:w-[60%] lg:h-[70%] xl:w-[40%] rounded-2xl xl:h-[90%] lg:p-25 z-50 bg-[#0A0E16] flex flex-col space-y-10 p-6 animate-expand-vertically animate-duration-600 animate-delay-500">
-                    <h1 className="text-4xl font-black text-center text-red-900">Custom Request</h1>
-                    <span className="text-white text-lg font-black space-y-6">
-                      <h3>● 💡 Any feature or component you need</h3>
-                      <h3>● 🎛️ Custom animations, UI elements, dashboards, tools, or workflows</h3>
-                      <h3>● 🔌 Integrations with APIs, services, or databases</h3>
-                      <h3>● 🛠️ Fixes, refactors, optimizations, or code audits</h3>
-                      <h3>● 🔄 Flexible project scope based on your goals</h3>
-                      <h1 className="text-xl font-black text-center mt-10">Perfect for: one-off tasks, experimental ideas, unique requirements, or anything that doesn't fit standard packages.</h1>
-                    </span>
-                    <div className="flex items-center justify-center space-x-4">
-                      <button onClick={() => setFourthProject(false)} className="w-40 h-12 xl:w-50 text-xl font-black bg-red-900 hover:bg-red-950 focus:bg-red-950 text-white rounded-full hover:cursor-pointer">Close</button>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
         </section>
       </div>
+
+      {/* ── SERVICE MODALS (rendered outside main div to avoid z-index issues) ── */}
+
+      {/* Front End Modal */}
+      <ServiceModal
+        isOpen={firstProject}
+        onClose={() => setFirstProject(false)}
+        title="Front-End Application"
+        icon="🖥️"
+        tagline="Pixel-perfect interfaces that feel alive"
+        accentFrom="#7f1d1d"
+        accentTo="#ef4444"
+        features={[
+          { icon: "📐", title: "Fully responsive layouts", desc: "Flawless on mobile, tablet, and desktop." },
+          { icon: "🎨", title: "Tailwind-powered styling", desc: "Consistent, scalable, and easy to maintain." },
+          { icon: "✨", title: "Sleek animations", desc: "Framer Motion or CSS — smooth and purposeful." },
+          { icon: "🧩", title: "Component-based UI", desc: "Reusable, modular, clean architecture." },
+          { icon: "⚡", title: "Optimized performance", desc: "Fast load times and lightweight assets." },
+          { icon: "🔗", title: "API-ready integration", desc: "Seamless connection to any backend you provide." },
+        ]}
+        perfect="Landing pages, portfolios, product UIs, marketing sites, modern dashboards."
+        emailSubject="Front-End Application Order"
+        emailBody={`Hi Adam,\n\nI'm interested in ordering a Front-End Application.\n\nHere are my project details:\n\n- Project name / idea:\n- Key pages / sections needed:\n- Design references (if any):\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+      />
+
+      {/* Full Stack Modal */}
+      <ServiceModal
+        isOpen={secondProject}
+        onClose={() => setSecondProject(false)}
+        title="Full Stack Application"
+        icon="⚙️"
+        tagline="End-to-end products built to scale"
+        accentFrom="#7f1d1d"
+        accentTo="#f97316"
+        features={[
+          { icon: "📱", title: "Modern, responsive UI", desc: "Great UX on every screen, every time." },
+          { icon: "🔒", title: "Secure backend", desc: "Industry-standard practices from day one." },
+          { icon: "🛠️", title: "API design & integration", desc: "Clean, documented, and extensible endpoints." },
+          { icon: "🗄️", title: "Database setup & optimization", desc: "SQL or NoSQL — structured for your needs." },
+          { icon: "☁️", title: "Deployment & hosting", desc: "Live and configured from day one." },
+          { icon: "🧹", title: "Clean, maintainable code", desc: "Ready for future scaling and new devs." },
+        ]}
+        perfect="Startups, SaaS products, dashboards, admin panels, business apps, and custom tools."
+        emailSubject="Full Stack Application Order"
+        emailBody={`Hi Adam,\n\nI'm interested in ordering a Full Stack Application.\n\nHere are my project details:\n\n- Project name / idea:\n- Frontend requirements:\n- Backend / database needs:\n- Key features:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+      />
+
+      {/* Back End Modal */}
+      <ServiceModal
+        isOpen={thirdProject}
+        onClose={() => setThirdProject(false)}
+        title="Back-End Application"
+        icon="🛡️"
+        tagline="Robust server-side systems, built right"
+        accentFrom="#7f1d1d"
+        accentTo="#6366f1"
+        features={[
+          { icon: "🔁", title: "REST or GraphQL APIs", desc: "Flexible, documented, and production-ready." },
+          { icon: "🛡️", title: "Auth & security", desc: "JWT, OAuth, and role-based access systems." },
+          { icon: "🗂️", title: "Database design", desc: "Optimized schemas for SQL or NoSQL databases." },
+          { icon: "🤖", title: "Server-side logic & automation", desc: "Business logic handled efficiently at scale." },
+          { icon: "🌐", title: "Third-party integrations", desc: "Payment gateways, email services, and more." },
+          { icon: "🚀", title: "Deployment & server setup", desc: "Configured and ready for production traffic." },
+        ]}
+        perfect="Complex logic systems, API-only projects, SaaS backends, and service infrastructures."
+        emailSubject="Back-End Application Order"
+        emailBody={`Hi Adam,\n\nI'm interested in ordering a Back-End Application.\n\nHere are my project details:\n\n- Project name / idea:\n- API requirements:\n- Database preferences:\n- Authentication needs:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+      />
+
+      {/* Custom Request Modal */}
+      <ServiceModal
+        isOpen={fourthProject}
+        onClose={() => setFourthProject(false)}
+        title="Custom Request"
+        icon="💡"
+        tagline="Your vision, built your way"
+        accentFrom="#7f1d1d"
+        accentTo="#10b981"
+        features={[
+          { icon: "🎛️", title: "Any feature or component", desc: "Animations, dashboards, tools, widgets — you name it." },
+          { icon: "🔌", title: "API & service integrations", desc: "Connect to any API, database, or third-party service." },
+          { icon: "🛠️", title: "Fixes, refactors & audits", desc: "Clean up, speed up, and improve existing code." },
+          { icon: "🧪", title: "Experimental ideas", desc: "If you can dream it, we can build it." },
+          { icon: "🔄", title: "Flexible project scope", desc: "Small task or large — I adapt to your goals." },
+          { icon: "📦", title: "One-off deliverables", desc: "No long contracts — just clean, delivered work." },
+        ]}
+        perfect="One-off tasks, unique requirements, experimental ideas, or anything outside standard packages."
+        emailSubject="Custom Development Request"
+        emailBody={`Hi Adam,\n\nI have a custom development request.\n\nHere are the details:\n\n- What I need:\n- Tech stack / preferences (if any):\n- Rough scope / size:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+      />
     </>
   );
 }
