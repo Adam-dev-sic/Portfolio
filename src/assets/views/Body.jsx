@@ -23,15 +23,13 @@ function useInView(threshold = 0.1) {
 // ─── Project data ────────────────────────────────────────────────────────────
 const PROJECTS = [
   {
-    title: "Garrow",
-    href: "https://garrow.onrender.com",
-    image: "/images/garrow.png",
+    title: "The Remuda",
+    href: "https://restaurant-temp-delta.vercel.app/",
+    image: "/images/theremuda.png",
     description:
-      "A goal-tracking system that helps you organize and link yearly, monthly, weekly, and daily goals. Set progress percentages, manage points, and track achievements while keeping everything interconnected. Designed to motivate, visualize progress, and make goal-setting fun and rewarding.",
+      "A fully responsive restaurant website featuring an elegant menu with food photography, a location and contact section, and a warm dining atmosphere brought to life through modern design. Built to help restaurants attract customers and showcase their food and ambiance online.",
     tech: [
-      { label: "React", color: "text-cyan-400" },
-      { label: "(Vite)", color: "text-purple-800" },
-      { label: "Node", color: "text-green-600" },
+      { label: "HTML", color: "text-orange-500" },
       { label: "Tailwind", color: "text-blue-600" },
     ],
   },
@@ -57,6 +55,19 @@ const PROJECTS = [
       { label: "Next.js", color: "text-slate-400" },
       { label: "React", color: "text-cyan-400" },
       { label: "Tailwind", color: "text-teal-400" },
+    ],
+  },
+  {
+    title: "Garrow",
+    href: "https://garrow.onrender.com",
+    image: "/images/garrow.png",
+    description:
+      "A goal-tracking system that helps you organize and link yearly, monthly, weekly, and daily goals. Set progress percentages, manage points, and track achievements while keeping everything interconnected. Designed to motivate, visualize progress, and make goal-setting fun and rewarding.",
+    tech: [
+      { label: "React", color: "text-cyan-400" },
+      { label: "(Vite)", color: "text-purple-800" },
+      { label: "Node", color: "text-green-600" },
+      { label: "Tailwind", color: "text-blue-600" },
     ],
   },
   {
@@ -150,7 +161,19 @@ function ProjectRow({ project, index, visible }) {
 }
 
 // ─── Service Modal ────────────────────────────────────────────────────────────
-function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect, emailSubject, emailBody, accentFrom, accentTo }) {
+function ServiceModal({
+  isOpen,
+  onClose,
+  title,
+  icon,
+  tagline,
+  features,
+  perfect,
+  emailSubject,
+  emailBody,
+  accentFrom,
+  accentTo,
+}) {
   if (!isOpen) return null;
 
   const mailtoLink = `mailto:adamforbusiness01@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
@@ -170,14 +193,17 @@ function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect
       <div
         className="relative z-10 w-[92%] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 shadow-2xl flex flex-col"
         style={{
-          background: "linear-gradient(160deg, #0d1117 0%, #0A0E16 60%, #110a0e 100%)",
+          background:
+            "linear-gradient(160deg, #0d1117 0%, #0A0E16 60%, #110a0e 100%)",
           animation: "modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
         }}
       >
         {/* Glow top bar */}
         <div
           className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
-          style={{ background: `linear-gradient(90deg, transparent, ${accentFrom}, ${accentTo}, transparent)` }}
+          style={{
+            background: `linear-gradient(90deg, transparent, ${accentFrom}, ${accentTo}, transparent)`,
+          }}
         />
 
         {/* Header */}
@@ -187,13 +213,20 @@ function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect
               {/* Icon bubble */}
               <div
                 className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                style={{ background: "rgba(127,29,29,0.25)", border: "1px solid rgba(127,29,29,0.4)" }}
+                style={{
+                  background: "rgba(127,29,29,0.25)",
+                  border: "1px solid rgba(127,29,29,0.4)",
+                }}
               >
                 {icon}
               </div>
               <div>
-                <h2 className="text-2xl font-black text-white leading-tight">{title}</h2>
-                <p className="text-sm text-gray-400 mt-0.5 font-medium">{tagline}</p>
+                <h2 className="text-2xl font-black text-white leading-tight">
+                  {title}
+                </h2>
+                <p className="text-sm text-gray-400 mt-0.5 font-medium">
+                  {tagline}
+                </p>
               </div>
             </div>
             {/* Close X */}
@@ -202,7 +235,12 @@ function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect
               className="text-gray-600 hover:text-white transition-colors duration-200 hover:cursor-pointer mt-1 flex-shrink-0"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -214,21 +252,35 @@ function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect
             <div
               key={i}
               className="flex items-start gap-3 group"
-              style={{ animation: `featureIn 0.35s ease ${0.1 + i * 0.06}s both` }}
+              style={{
+                animation: `featureIn 0.35s ease ${0.1 + i * 0.06}s both`,
+              }}
             >
               {/* Icon pill */}
               <span className="mt-0.5 text-base flex-shrink-0">{f.icon}</span>
               <div>
                 <span className="text-white font-bold text-sm">{f.title}</span>
-                {f.desc && <p className="text-gray-400 text-sm mt-0.5 font-medium">{f.desc}</p>}
+                {f.desc && (
+                  <p className="text-gray-400 text-sm mt-0.5 font-medium">
+                    {f.desc}
+                  </p>
+                )}
               </div>
             </div>
           ))}
         </div>
 
         {/* "Perfect for" strip */}
-        <div className="mx-8 mb-6 rounded-xl p-4" style={{ background: "rgba(127,29,29,0.1)", border: "1px solid rgba(127,29,29,0.2)" }}>
-          <p className="text-xs font-black uppercase tracking-widest text-red-800 mb-1">Perfect for</p>
+        <div
+          className="mx-8 mb-6 rounded-xl p-4"
+          style={{
+            background: "rgba(127,29,29,0.1)",
+            border: "1px solid rgba(127,29,29,0.2)",
+          }}
+        >
+          <p className="text-xs font-black uppercase tracking-widest text-red-800 mb-1">
+            Perfect for
+          </p>
           <p className="text-gray-300 text-sm font-medium">{perfect}</p>
         </div>
 
@@ -246,7 +298,13 @@ function ServiceModal({ isOpen, onClose, title, icon, tagline, features, perfect
             style={{ boxShadow: "0 0 20px rgba(127,29,29,0.4)" }}
           >
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             Order Now
           </a>
@@ -320,7 +378,6 @@ function Body() {
   return (
     <>
       <div className="min-h-screen bg-gray-950 py-10 px-3 lg:px-25 xl:px-35 lg:py-15 2xl:px-45">
-
         {/* ── HERO / ABOUT ─────────────────────────────────────────────── */}
         <section>
           <span
@@ -507,7 +564,9 @@ function Body() {
                       : "text-gray-600 group-hover:text-gray-400 opacity-70"
                   }`}
                 >
-                  {i === 0 ? "01 — 03" : `0${i * 3 + 1} — 0${Math.min(i * 3 + 3, PROJECTS.length)}`}
+                  {i === 0
+                    ? "01 — 03"
+                    : `0${i * 3 + 1} — 0${Math.min(i * 3 + 3, PROJECTS.length)}`}
                 </span>
               </button>
             ))}
@@ -517,7 +576,9 @@ function Body() {
 
             {/* Counter */}
             <span className="text-gray-600 text-sm font-black ml-auto">
-              <span className="text-red-900">{String(activePage + 1).padStart(2, "0")}</span>
+              <span className="text-red-900">
+                {String(activePage + 1).padStart(2, "0")}
+              </span>
               {" / "}
               {String(PAGES.length).padStart(2, "0")}
             </span>
@@ -547,7 +608,13 @@ function Body() {
               }`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               Previous
             </button>
@@ -578,7 +645,13 @@ function Body() {
             >
               Next
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
@@ -620,14 +693,30 @@ function Body() {
               } ${firstProject ? "z-9999" : ""}`}
             >
               <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img className="w-full h-full" src="/images/webpage.svg" alt="" />
+                <img
+                  className="w-full h-full"
+                  src="/images/webpage.svg"
+                  alt=""
+                />
               </div>
               <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">Front End App</h1>
-                <p className="font-bold text-white">I craft beautiful, high-performance front-end interfaces with a strong focus on animations, responsiveness, and pixel-perfect design. Your website or app will feel clean, modern, fast, and intuitive on every device.</p>
+                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
+                  Front End App
+                </h1>
+                <p className="font-bold text-white">
+                  I craft beautiful, high-performance front-end interfaces with
+                  a strong focus on animations, responsiveness, and
+                  pixel-perfect design. Your website or app will feel clean,
+                  modern, fast, and intuitive on every device.
+                </p>
               </span>
               <div className="w-full flex items-center justify-center">
-                <button onClick={() => setFirstProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
+                <button
+                  onClick={() => setFirstProject(true)}
+                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
+                >
+                  Details
+                </button>
               </div>
             </div>
 
@@ -640,14 +729,30 @@ function Body() {
               } ${secondProject ? "z-500" : ""}`}
             >
               <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img className="w-full h-full" src="/images/hammerandwrench.svg" alt="" />
+                <img
+                  className="w-full h-full"
+                  src="/images/hammerandwrench.svg"
+                  alt=""
+                />
               </div>
               <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">Full Stack App</h1>
-                <p className="font-bold text-white">I build full end-to-end web applications—from the user interface to the server, database, and APIs. Whether it's a new product or an upgrade, I deliver secure, scalable, and optimized solutions.</p>
+                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
+                  Full Stack App
+                </h1>
+                <p className="font-bold text-white">
+                  I build full end-to-end web applications—from the user
+                  interface to the server, database, and APIs. Whether it's a
+                  new product or an upgrade, I deliver secure, scalable, and
+                  optimized solutions.
+                </p>
               </span>
               <div className="w-full flex items-center justify-center">
-                <button onClick={() => setSecondProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
+                <button
+                  onClick={() => setSecondProject(true)}
+                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
+                >
+                  Details
+                </button>
               </div>
             </div>
 
@@ -660,14 +765,29 @@ function Body() {
               } ${thirdProject ? "z-500" : ""}`}
             >
               <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img className="w-full h-full" src="/images/settings.svg" alt="" />
+                <img
+                  className="w-full h-full"
+                  src="/images/settings.svg"
+                  alt=""
+                />
               </div>
               <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">Back End App</h1>
-                <p className="font-bold text-white">I build secure, scalable, and efficient back-end systems that handle your business logic, data processing, and integrations smoothly and reliably.</p>
+                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
+                  Back End App
+                </h1>
+                <p className="font-bold text-white">
+                  I build secure, scalable, and efficient back-end systems that
+                  handle your business logic, data processing, and integrations
+                  smoothly and reliably.
+                </p>
               </span>
               <div className="w-full flex items-center justify-center">
-                <button onClick={() => setThirdProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
+                <button
+                  onClick={() => setThirdProject(true)}
+                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
+                >
+                  Details
+                </button>
               </div>
             </div>
 
@@ -680,14 +800,29 @@ function Body() {
               } ${fourthProject ? "z-500" : ""}`}
             >
               <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img className="w-full h-full" src="/images/sparkles.svg" alt="" />
+                <img
+                  className="w-full h-full"
+                  src="/images/sparkles.svg"
+                  alt=""
+                />
               </div>
               <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">Custom Request</h1>
-                <p className="font-bold text-white">Have something unique in mind? I offer fully custom solutions tailored to your exact needs — whether it's a small component, a complex feature, a bug fix, or a full product idea.</p>
+                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
+                  Custom Request
+                </h1>
+                <p className="font-bold text-white">
+                  Have something unique in mind? I offer fully custom solutions
+                  tailored to your exact needs — whether it's a small component,
+                  a complex feature, a bug fix, or a full product idea.
+                </p>
               </span>
               <div className="w-full flex items-center justify-center">
-                <button onClick={() => setFourthProject(true)} className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black">Details</button>
+                <button
+                  onClick={() => setFourthProject(true)}
+                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
+                >
+                  Details
+                </button>
               </div>
             </div>
           </div>
@@ -706,12 +841,36 @@ function Body() {
         accentFrom="#7f1d1d"
         accentTo="#ef4444"
         features={[
-          { icon: "📐", title: "Fully responsive layouts", desc: "Flawless on mobile, tablet, and desktop." },
-          { icon: "🎨", title: "Tailwind-powered styling", desc: "Consistent, scalable, and easy to maintain." },
-          { icon: "✨", title: "Sleek animations", desc: "Framer Motion or CSS — smooth and purposeful." },
-          { icon: "🧩", title: "Component-based UI", desc: "Reusable, modular, clean architecture." },
-          { icon: "⚡", title: "Optimized performance", desc: "Fast load times and lightweight assets." },
-          { icon: "🔗", title: "API-ready integration", desc: "Seamless connection to any backend you provide." },
+          {
+            icon: "📐",
+            title: "Fully responsive layouts",
+            desc: "Flawless on mobile, tablet, and desktop.",
+          },
+          {
+            icon: "🎨",
+            title: "Tailwind-powered styling",
+            desc: "Consistent, scalable, and easy to maintain.",
+          },
+          {
+            icon: "✨",
+            title: "Sleek animations",
+            desc: "Framer Motion or CSS — smooth and purposeful.",
+          },
+          {
+            icon: "🧩",
+            title: "Component-based UI",
+            desc: "Reusable, modular, clean architecture.",
+          },
+          {
+            icon: "⚡",
+            title: "Optimized performance",
+            desc: "Fast load times and lightweight assets.",
+          },
+          {
+            icon: "🔗",
+            title: "API-ready integration",
+            desc: "Seamless connection to any backend you provide.",
+          },
         ]}
         perfect="Landing pages, portfolios, product UIs, marketing sites, modern dashboards."
         emailSubject="Front-End Application Order"
@@ -728,12 +887,36 @@ function Body() {
         accentFrom="#7f1d1d"
         accentTo="#f97316"
         features={[
-          { icon: "📱", title: "Modern, responsive UI", desc: "Great UX on every screen, every time." },
-          { icon: "🔒", title: "Secure backend", desc: "Industry-standard practices from day one." },
-          { icon: "🛠️", title: "API design & integration", desc: "Clean, documented, and extensible endpoints." },
-          { icon: "🗄️", title: "Database setup & optimization", desc: "SQL or NoSQL — structured for your needs." },
-          { icon: "☁️", title: "Deployment & hosting", desc: "Live and configured from day one." },
-          { icon: "🧹", title: "Clean, maintainable code", desc: "Ready for future scaling and new devs." },
+          {
+            icon: "📱",
+            title: "Modern, responsive UI",
+            desc: "Great UX on every screen, every time.",
+          },
+          {
+            icon: "🔒",
+            title: "Secure backend",
+            desc: "Industry-standard practices from day one.",
+          },
+          {
+            icon: "🛠️",
+            title: "API design & integration",
+            desc: "Clean, documented, and extensible endpoints.",
+          },
+          {
+            icon: "🗄️",
+            title: "Database setup & optimization",
+            desc: "SQL or NoSQL — structured for your needs.",
+          },
+          {
+            icon: "☁️",
+            title: "Deployment & hosting",
+            desc: "Live and configured from day one.",
+          },
+          {
+            icon: "🧹",
+            title: "Clean, maintainable code",
+            desc: "Ready for future scaling and new devs.",
+          },
         ]}
         perfect="Startups, SaaS products, dashboards, admin panels, business apps, and custom tools."
         emailSubject="Full Stack Application Order"
@@ -750,12 +933,36 @@ function Body() {
         accentFrom="#7f1d1d"
         accentTo="#6366f1"
         features={[
-          { icon: "🔁", title: "REST or GraphQL APIs", desc: "Flexible, documented, and production-ready." },
-          { icon: "🛡️", title: "Auth & security", desc: "JWT, OAuth, and role-based access systems." },
-          { icon: "🗂️", title: "Database design", desc: "Optimized schemas for SQL or NoSQL databases." },
-          { icon: "🤖", title: "Server-side logic & automation", desc: "Business logic handled efficiently at scale." },
-          { icon: "🌐", title: "Third-party integrations", desc: "Payment gateways, email services, and more." },
-          { icon: "🚀", title: "Deployment & server setup", desc: "Configured and ready for production traffic." },
+          {
+            icon: "🔁",
+            title: "REST or GraphQL APIs",
+            desc: "Flexible, documented, and production-ready.",
+          },
+          {
+            icon: "🛡️",
+            title: "Auth & security",
+            desc: "JWT, OAuth, and role-based access systems.",
+          },
+          {
+            icon: "🗂️",
+            title: "Database design",
+            desc: "Optimized schemas for SQL or NoSQL databases.",
+          },
+          {
+            icon: "🤖",
+            title: "Server-side logic & automation",
+            desc: "Business logic handled efficiently at scale.",
+          },
+          {
+            icon: "🌐",
+            title: "Third-party integrations",
+            desc: "Payment gateways, email services, and more.",
+          },
+          {
+            icon: "🚀",
+            title: "Deployment & server setup",
+            desc: "Configured and ready for production traffic.",
+          },
         ]}
         perfect="Complex logic systems, API-only projects, SaaS backends, and service infrastructures."
         emailSubject="Back-End Application Order"
@@ -772,12 +979,36 @@ function Body() {
         accentFrom="#7f1d1d"
         accentTo="#10b981"
         features={[
-          { icon: "🎛️", title: "Any feature or component", desc: "Animations, dashboards, tools, widgets — you name it." },
-          { icon: "🔌", title: "API & service integrations", desc: "Connect to any API, database, or third-party service." },
-          { icon: "🛠️", title: "Fixes, refactors & audits", desc: "Clean up, speed up, and improve existing code." },
-          { icon: "🧪", title: "Experimental ideas", desc: "If you can dream it, we can build it." },
-          { icon: "🔄", title: "Flexible project scope", desc: "Small task or large — I adapt to your goals." },
-          { icon: "📦", title: "One-off deliverables", desc: "No long contracts — just clean, delivered work." },
+          {
+            icon: "🎛️",
+            title: "Any feature or component",
+            desc: "Animations, dashboards, tools, widgets — you name it.",
+          },
+          {
+            icon: "🔌",
+            title: "API & service integrations",
+            desc: "Connect to any API, database, or third-party service.",
+          },
+          {
+            icon: "🛠️",
+            title: "Fixes, refactors & audits",
+            desc: "Clean up, speed up, and improve existing code.",
+          },
+          {
+            icon: "🧪",
+            title: "Experimental ideas",
+            desc: "If you can dream it, we can build it.",
+          },
+          {
+            icon: "🔄",
+            title: "Flexible project scope",
+            desc: "Small task or large — I adapt to your goals.",
+          },
+          {
+            icon: "📦",
+            title: "One-off deliverables",
+            desc: "No long contracts — just clean, delivered work.",
+          },
         ]}
         perfect="One-off tasks, unique requirements, experimental ideas, or anything outside standard packages."
         emailSubject="Custom Development Request"
