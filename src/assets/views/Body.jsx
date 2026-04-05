@@ -160,171 +160,120 @@ function ProjectRow({ project, index, visible }) {
   );
 }
 
-// ─── Service Modal ────────────────────────────────────────────────────────────
-function ServiceModal({
-  isOpen,
-  onClose,
-  title,
-  icon,
-  tagline,
-  features,
-  perfect,
-  emailSubject,
-  emailBody,
-  accentFrom,
-  accentTo,
-}) {
+// ─── Pricing Modal ────────────────────────────────────────────────────────────
+function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, emailSubject, emailBody, featured }) {
   if (!isOpen) return null;
-
   const mailtoLink = `mailto:adamforbusiness01@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ animation: "backdropIn 0.35s ease forwards" }}
+      style={{ animation: "backdropIn 0.3s ease forwards" }}
     >
-      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
       <div
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-        onClick={onClose}
-      />
-
-      {/* Modal card */}
-      <div
-        className="relative z-10 w-[92%] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 shadow-2xl flex flex-col"
+        className="relative z-10 w-[92%] max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border shadow-2xl flex flex-col"
         style={{
-          background:
-            "linear-gradient(160deg, #0d1117 0%, #0A0E16 60%, #110a0e 100%)",
-          animation: "modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
+          background: featured
+            ? "linear-gradient(160deg, #130a0c 0%, #0d0608 100%)"
+            : "linear-gradient(160deg, #0d1117 0%, #0A0E16 100%)",
+          borderColor: featured ? "#7f1d1d" : "rgba(255,255,255,0.08)",
+          animation: "modalIn 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards",
         }}
       >
-        {/* Glow top bar */}
+        {/* Top glow line */}
         <div
           className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
           style={{
-            background: `linear-gradient(90deg, transparent, ${accentFrom}, ${accentTo}, transparent)`,
+            background: featured
+              ? "linear-gradient(90deg, transparent, #991b1b, #ef4444, #991b1b, transparent)"
+              : "linear-gradient(90deg, transparent, rgba(127,29,29,0.5), transparent)",
           }}
         />
 
         {/* Header */}
-        <div className="px-8 pt-8 pb-6 border-b border-white/5">
+        <div className="px-7 pt-8 pb-5 border-b" style={{ borderColor: featured ? "rgba(127,29,29,0.2)" : "rgba(255,255,255,0.05)" }}>
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-4">
-              {/* Icon bubble */}
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
-                style={{
-                  background: "rgba(127,29,29,0.25)",
-                  border: "1px solid rgba(127,29,29,0.4)",
-                }}
+                className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
+                style={{ background: "rgba(127,29,29,0.2)", border: "1px solid rgba(127,29,29,0.35)" }}
               >
                 {icon}
               </div>
               <div>
-                <h2 className="text-2xl font-black text-white leading-tight">
-                  {title}
-                </h2>
-                <p className="text-sm text-gray-400 mt-0.5 font-medium">
-                  {tagline}
-                </p>
+                <h2 className="text-xl font-black text-white">{title}</h2>
+                <p className="text-xs text-gray-500 mt-0.5 font-medium">{tagline}</p>
               </div>
             </div>
-            {/* Close X */}
             <button
               onClick={onClose}
-              className="text-gray-600 hover:text-white transition-colors duration-200 hover:cursor-pointer mt-1 flex-shrink-0"
+              className="text-gray-600 hover:text-white transition-colors mt-1 flex-shrink-0 hover:cursor-pointer"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M18 6L6 18M6 6l12 12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
               </svg>
             </button>
           </div>
         </div>
 
         {/* Features */}
-        <div className="px-8 py-6 flex flex-col gap-3 flex-1">
+        <div className="px-7 py-5 flex flex-col gap-2.5 flex-1">
           {features.map((f, i) => (
             <div
               key={i}
-              className="flex items-start gap-3 group"
-              style={{
-                animation: `featureIn 0.35s ease ${0.1 + i * 0.06}s both`,
-              }}
+              className="flex items-start gap-3"
+              style={{ animation: `featureIn 0.3s ease ${0.08 + i * 0.05}s both` }}
             >
-              {/* Icon pill */}
-              <span className="mt-0.5 text-base flex-shrink-0">{f.icon}</span>
+              <span className="text-red-600 mt-0.5 flex-shrink-0 font-black text-sm">✓</span>
               <div>
-                <span className="text-white font-bold text-sm">{f.title}</span>
-                {f.desc && (
-                  <p className="text-gray-400 text-sm mt-0.5 font-medium">
-                    {f.desc}
-                  </p>
-                )}
+                <span className="text-white font-semibold text-sm">{f.label}</span>
+                {f.desc && <p className="text-gray-500 text-xs mt-0.5">{f.desc}</p>}
               </div>
             </div>
           ))}
         </div>
 
-        {/* "Perfect for" strip */}
-        <div
-          className="mx-8 mb-6 rounded-xl p-4"
-          style={{
-            background: "rgba(127,29,29,0.1)",
-            border: "1px solid rgba(127,29,29,0.2)",
-          }}
-        >
-          <p className="text-xs font-black uppercase tracking-widest text-red-800 mb-1">
-            Perfect for
-          </p>
-          <p className="text-gray-300 text-sm font-medium">{perfect}</p>
-        </div>
+        {/* Note strip */}
+        {note && (
+          <div
+            className="mx-7 mb-5 rounded-xl p-3.5"
+            style={{ background: "rgba(127,29,29,0.08)", border: "1px solid rgba(127,29,29,0.18)" }}
+          >
+            <p className="text-gray-400 text-xs font-medium">{note}</p>
+          </div>
+        )}
 
         {/* Actions */}
-        <div className="px-8 pb-8 flex gap-3">
+        <div className="px-7 pb-7 flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 h-11 rounded-xl border border-white/10 text-gray-400 hover:text-white hover:border-white/20 text-sm font-bold transition-all duration-200 hover:cursor-pointer"
+            className="flex-1 h-11 rounded-xl border border-white/10 text-gray-500 hover:text-white hover:border-white/20 text-sm font-bold transition-all duration-200 hover:cursor-pointer"
           >
             Close
           </button>
           <a
             href={mailtoLink}
-            className="flex-1 h-11 rounded-xl bg-red-900 hover:bg-red-800 text-white text-sm font-black flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
-            style={{ boxShadow: "0 0 20px rgba(127,29,29,0.4)" }}
+            className="flex-1 h-11 rounded-xl text-white text-sm font-black flex items-center justify-center gap-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+            style={{
+              background: featured
+                ? "linear-gradient(135deg, #7f1d1d, #991b1b)"
+                : "rgba(127,29,29,0.8)",
+              boxShadow: featured ? "0 0 20px rgba(127,29,29,0.45)" : "none",
+            }}
           >
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Order Now
           </a>
         </div>
       </div>
 
-      {/* Keyframe styles */}
       <style>{`
-        @keyframes backdropIn {
-          from { opacity: 0; }
-          to   { opacity: 1; }
-        }
-        @keyframes modalIn {
-          from { opacity: 0; transform: scale(0.88) translateY(24px); }
-          to   { opacity: 1; transform: scale(1) translateY(0); }
-        }
-        @keyframes featureIn {
-          from { opacity: 0; transform: translateX(-10px); }
-          to   { opacity: 1; transform: translateX(0); }
-        }
+        @keyframes backdropIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes featureIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
       `}</style>
     </div>
   );
@@ -341,10 +290,10 @@ function Body() {
   const [servicesTextRef, servicesTextInView] = useInView(0.5);
   const [servicesRef, servicesInView] = useInView(0.1);
 
-  const [firstProject, setFirstProject] = useState(false);
-  const [secondProject, setSecondProject] = useState(false);
-  const [thirdProject, setThirdProject] = useState(false);
-  const [fourthProject, setFourthProject] = useState(false);
+  // ── Modal states ──────────────────────────────────────────────────────────
+  const [lumpSumModal, setLumpSumModal] = useState(false);
+  const [monthlyModal, setMonthlyModal] = useState(false);
+  const [ecommerceModal, setEcommerceModal] = useState(false);
 
   // ── Pagination state ──────────────────────────────────────────────────────
   const [activePage, setActivePage] = useState(0);
@@ -361,19 +310,80 @@ function Body() {
   }
 
   useEffect(() => {
-    if (firstProject || secondProject || thirdProject || fourthProject) {
+    if (lumpSumModal || monthlyModal || ecommerceModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [firstProject, secondProject, thirdProject, fourthProject]);
+    return () => { document.body.style.overflow = ""; };
+  }, [lumpSumModal, monthlyModal, ecommerceModal]);
 
-  useEffect(() => {
-    setLoaded(true);
-  }, []);
+  useEffect(() => { setLoaded(true); }, []);
+
+  // ── Pricing card data ─────────────────────────────────────────────────────
+  const PLANS = [
+    {
+      key: "lumpsum",
+      label: "One-Time",
+      title: "Lump Sum",
+      price: "$2,800",
+      sub: "+ $25/mo hosting",
+      featured: false,
+      features: [
+        "Design & Development",
+        "$25/mo Hosting",
+        "$100 fee per page after 5",
+        "+$50/mo Unlimited Edits (add-on)",
+        "+$250 to add a Blog",
+        "24/7 Support",
+        "Lifetime Updates",
+      ],
+      onDetails: () => setLumpSumModal(true),
+      emailSubject: "Lump Sum Website Order",
+      emailBody: "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
+    },
+    {
+      key: "monthly",
+      label: "Recommended",
+      title: "Monthly",
+      price: "$150",
+      sub: "/month — hosting included",
+      featured: true,
+      badge: "★ Most Popular",
+      features: [
+        "Design & Development",
+        "Hosting Included",
+        "$100 fee per page after 5",
+        "+$250 to add a Blog",
+        "Unlimited Edits",
+        "24/7 Support",
+        "Lifetime Updates",
+      ],
+      onDetails: () => setMonthlyModal(true),
+      emailSubject: "Monthly Plan Order",
+      emailBody: "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!",
+    },
+    {
+      key: "ecommerce",
+      label: "E-Commerce",
+      title: "Ecommerce",
+      price: "$5k",
+      sub: "starting",
+      featured: false,
+      features: [
+        "Custom Shopify Store",
+        "Configure Any & All Apps",
+        "Integrated Shipping",
+        "Shopify Tutorial Walkthrough",
+        "Fully Editable in Shopify CMS",
+        "+$50/mo Unlimited Edits (add-on)",
+        "24/7 Support",
+      ],
+      onDetails: () => setEcommerceModal(true),
+      emailSubject: "Ecommerce Store Order",
+      emailBody: "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!",
+    },
+  ];
 
   return (
     <>
@@ -519,7 +529,6 @@ function Body() {
             }`}
           ></div>
 
-          {/* Section heading */}
           <div
             ref={myProjectTextRef}
             className={`2xl:ml-[7%] text-4xl font-black text-red-900 mt-25 ${
@@ -533,7 +542,6 @@ function Body() {
             </h1>
           </div>
 
-          {/* ── Pagination tabs ────────────────────────────────────────── */}
           <div
             ref={projectsSectionRef}
             className={`flex items-center gap-3 mt-10 2xl:ml-[7%] ${
@@ -548,7 +556,6 @@ function Body() {
                 onClick={() => switchPage(i)}
                 className="relative group flex items-center gap-2 hover:cursor-pointer"
               >
-                {/* Dot */}
                 <span
                   className={`inline-block rounded-full transition-all duration-400 ${
                     activePage === i
@@ -556,7 +563,6 @@ function Body() {
                       : "w-3 h-3 bg-gray-700 group-hover:bg-red-950"
                   }`}
                 />
-                {/* Label */}
                 <span
                   className={`text-sm font-black transition-all duration-300 ${
                     activePage === i
@@ -570,11 +576,7 @@ function Body() {
                 </span>
               </button>
             ))}
-
-            {/* Divider line */}
             <div className="flex-1 h-px bg-gray-800 ml-2 max-w-xs" />
-
-            {/* Counter */}
             <span className="text-gray-600 text-sm font-black ml-auto">
               <span className="text-red-900">
                 {String(activePage + 1).padStart(2, "0")}
@@ -584,7 +586,6 @@ function Body() {
             </span>
           </div>
 
-          {/* ── Project list ───────────────────────────────────────────── */}
           <div ref={projectsSectionRef}>
             {PAGES[activePage].map((project, index) => (
               <ProjectRow
@@ -596,7 +597,6 @@ function Body() {
             ))}
           </div>
 
-          {/* ── Next / Prev buttons ────────────────────────────────────── */}
           <div className="flex items-center justify-between mt-20 2xl:ml-[7%] 2xl:mr-[7%]">
             <button
               onClick={() => switchPage(activePage - 1)}
@@ -608,18 +608,11 @@ function Body() {
               }`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M15 18L9 12L15 6"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               Previous
             </button>
 
-            {/* Dots */}
             <div className="flex gap-2">
               {PAGES.map((_, i) => (
                 <button
@@ -645,13 +638,7 @@ function Body() {
             >
               Next
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M9 18L15 12L9 6"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
           </div>
@@ -667,352 +654,230 @@ function Body() {
                 : "opacity-0"
             }`}
           >
-            <h1
-              onClick={(e) =>
-                window.scrollTo({
-                  top: e.currentTarget.offsetTop + 3200,
-                  behavior: "smooth",
-                })
-              }
-              className="inline-block relative underline-anim"
-            >
-              Services
-            </h1>
+            <h1 className="inline-block relative underline-anim">Services</h1>
           </div>
 
+          {/* Subtitle */}
+          <p className={`text-center text-gray-500 text-sm font-medium mt-3 transition-opacity duration-700 ${servicesTextInView ? "opacity-100" : "opacity-0"}`}>
+            Choose a plan that fits your needs — all include professional delivery and full support.
+          </p>
+
+          {/* Pricing cards */}
           <div
             ref={servicesRef}
-            className="flex mt-[5%] flex-wrap gap-8 lg:gap-15 items-center justify-center w-full"
+            className="flex mt-14 flex-col lg:flex-row gap-6 items-center lg:items-stretch justify-center w-full"
           >
-            {/* Front End App */}
-            <div
-              className={`bg-[#0A0E16] overflow-auto rounded-3xl border-4 border-[#11141B] group hover:cursor-pointer hover:border-[#2D3038] p-10 h-150 w-screen xl:w-[40%] 2xl:w-[30%] flex flex-col space-y-8 2xl:space-y-14 ${
-                servicesInView
-                  ? "lg:opacity-75 transition duration-800 lg:hover:duration-300 lg:hover:delay-0 lg:hover:opacity-100"
-                  : "opacity-0"
-              } ${firstProject ? "z-9999" : ""}`}
-            >
-              <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img
-                  className="w-full h-full"
-                  src="/images/webpage.svg"
-                  alt=""
-                />
-              </div>
-              <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
-                  Front End App
-                </h1>
-                <p className="font-bold text-white">
-                  I craft beautiful, high-performance front-end interfaces with
-                  a strong focus on animations, responsiveness, and
-                  pixel-perfect design. Your website or app will feel clean,
-                  modern, fast, and intuitive on every device.
-                </p>
-              </span>
-              <div className="w-full flex items-center justify-center">
-                <button
-                  onClick={() => setFirstProject(true)}
-                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
+            {PLANS.map((plan, idx) => {
+              const delay = idx * 0.15;
+              return (
+                <div
+                  key={plan.key}
+                  className="relative flex flex-col w-full lg:w-[30%] rounded-2xl p-7"
+                  style={{
+                    background: plan.featured
+                      ? "linear-gradient(160deg, #130a0c 0%, #0d0608 60%, #110a0e 100%)"
+                      : "#0A0E16",
+                    border: plan.featured ? "2px solid #7f1d1d" : "1px solid #1e2433",
+                    boxShadow: plan.featured
+                      ? "0 0 60px rgba(127,29,29,0.25), inset 0 0 60px rgba(127,29,29,0.03)"
+                      : "none",
+                    opacity: servicesInView ? 1 : 0,
+                    transform: servicesInView
+                      ? plan.featured ? "translateY(-12px)" : "translateY(0)"
+                      : "translateY(24px)",
+                    transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
+                  }}
                 >
-                  Details
-                </button>
-              </div>
-            </div>
+                  {/* Most popular badge */}
+                  {plan.badge && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
+                      <span
+                        className="text-white text-xs font-black px-5 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap"
+                        style={{
+                          background: "linear-gradient(135deg, #7f1d1d, #991b1b)",
+                          boxShadow: "0 0 24px rgba(127,29,29,0.7)",
+                        }}
+                      >
+                        {plan.badge}
+                      </span>
+                    </div>
+                  )}
 
-            {/* Full Stack App */}
-            <div
-              className={`bg-[#0A0E16] overflow-auto rounded-3xl border-4 border-[#11141B] z-0 group hover:cursor-pointer hover:border-[#2D3038] p-10 h-150 w-screen xl:w-[40%] 2xl:w-[30%] flex flex-col space-y-8 2xl:space-y-14 ${
-                servicesInView
-                  ? "transition lg:opacity-75 duration-800 lg:hover:duration-300 lg:hover:delay-0 z-0 lg:hover:opacity-100"
-                  : "opacity-0"
-              } ${secondProject ? "z-500" : ""}`}
-            >
-              <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img
-                  className="w-full h-full"
-                  src="/images/hammerandwrench.svg"
-                  alt=""
-                />
-              </div>
-              <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
-                  Full Stack App
-                </h1>
-                <p className="font-bold text-white">
-                  I build full end-to-end web applications—from the user
-                  interface to the server, database, and APIs. Whether it's a
-                  new product or an upgrade, I deliver secure, scalable, and
-                  optimized solutions.
-                </p>
-              </span>
-              <div className="w-full flex items-center justify-center">
-                <button
-                  onClick={() => setSecondProject(true)}
-                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
-                >
-                  Details
-                </button>
-              </div>
-            </div>
+                  {/* Shimmer top line on featured */}
+                  {plan.featured && (
+                    <div
+                      className="absolute top-0 left-0 right-0 h-px rounded-t-2xl"
+                      style={{
+                        background:
+                          "linear-gradient(90deg, transparent, #991b1b, #ef4444, #991b1b, transparent)",
+                      }}
+                    />
+                  )}
 
-            {/* Back End App */}
-            <div
-              className={`bg-[#0A0E16] overflow-auto rounded-3xl border-4 border-[#11141B] group hover:cursor-pointer hover:border-[#2D3038] transition duration-500 ease-in-out p-10 h-150 w-screen xl:w-[40%] 2xl:w-[30%] flex flex-col space-y-8 2xl:space-y-14 ${
-                servicesInView
-                  ? "transition lg:opacity-75 lg:hover:opacity-100 lg:hover:duration-300 lg:hover:delay-0 duration-800 delay-400"
-                  : "opacity-0"
-              } ${thirdProject ? "z-500" : ""}`}
-            >
-              <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img
-                  className="w-full h-full"
-                  src="/images/settings.svg"
-                  alt=""
-                />
-              </div>
-              <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
-                  Back End App
-                </h1>
-                <p className="font-bold text-white">
-                  I build secure, scalable, and efficient back-end systems that
-                  handle your business logic, data processing, and integrations
-                  smoothly and reliably.
-                </p>
-              </span>
-              <div className="w-full flex items-center justify-center">
-                <button
-                  onClick={() => setThirdProject(true)}
-                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
-                >
-                  Details
-                </button>
-              </div>
-            </div>
+                  {/* Plan header */}
+                  <div className={plan.badge ? "mt-3" : ""}>
+                    <p
+                      className="text-xs font-black uppercase tracking-widest mb-2"
+                      style={{ color: plan.featured ? "#7f1d1d" : "#4b5563" }}
+                    >
+                      {plan.label}
+                    </p>
+                    <h2 className="text-white font-black text-2xl">{plan.title}</h2>
 
-            {/* Custom Request */}
-            <div
-              className={`bg-[#0A0E16] overflow-auto rounded-3xl group border-4 border-[#11141B] hover:cursor-pointer hover:border-[#2D3038] transition p-10 h-150 w-screen xl:w-[40%] 2xl:w-[30%] flex flex-col space-y-8 2xl:space-y-14 ${
-                servicesInView
-                  ? "lg:opacity-75 transition duration-800 lg:hover:opacity-100 hover:duration-300 hover:delay-0 delay-600"
-                  : "opacity-0"
-              } ${fourthProject ? "z-500" : ""}`}
-            >
-              <div className="mt-[14%] w-full h-19 flex justify-center items-center">
-                <img
-                  className="w-full h-full"
-                  src="/images/sparkles.svg"
-                  alt=""
-                />
-              </div>
-              <span className="flex flex-col space-y-4">
-                <h1 className="mx-auto inline-block relative underline-anim font-black text-3xl text-red-900">
-                  Custom Request
-                </h1>
-                <p className="font-bold text-white">
-                  Have something unique in mind? I offer fully custom solutions
-                  tailored to your exact needs — whether it's a small component,
-                  a complex feature, a bug fix, or a full product idea.
-                </p>
-              </span>
-              <div className="w-full flex items-center justify-center">
-                <button
-                  onClick={() => setFourthProject(true)}
-                  className="lg:w-40 w-40 h-12 focus:bg-red-950 lg:h-12 bg-red-900 hover:scale-110 transition duration-300 hover:cursor-pointer hover:bg-red-950 rounded-full text-white text-xl font-black"
-                >
-                  Details
-                </button>
-              </div>
-            </div>
+                    {/* Price */}
+                    <div className="flex items-end gap-2 mt-4">
+                      <span
+                        className="font-black text-white"
+                        style={{ fontSize: "2.4rem", lineHeight: 1 }}
+                      >
+                        {plan.price}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 text-xs mt-1 font-medium">{plan.sub}</p>
+                  </div>
+
+                  {/* Divider */}
+                  <div
+                    className="my-5 h-px"
+                    style={{
+                      background: plan.featured
+                        ? "rgba(127,29,29,0.25)"
+                        : "#1e2433",
+                    }}
+                  />
+
+                  {/* Feature list */}
+                  <ul className="flex flex-col gap-2.5 flex-1 mb-7">
+                    {plan.features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <span
+                          className="flex-shrink-0 mt-0.5 font-black text-sm"
+                          style={{ color: plan.featured ? "#ef4444" : "#7f1d1d" }}
+                        >
+                          ✓
+                        </span>
+                        <span
+                          className="text-sm font-medium"
+                          style={{ color: plan.featured ? "#e5e7eb" : "#9ca3af" }}
+                        >
+                          {f}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  {/* Buttons */}
+                  <div className="flex gap-3">
+                    <button
+                      onClick={plan.onDetails}
+                      className="flex-1 h-11 rounded-xl text-sm font-bold transition-all duration-200 hover:cursor-pointer hover:text-white"
+                      style={{
+                        border: plan.featured
+                          ? "1px solid rgba(127,29,29,0.35)"
+                          : "1px solid rgba(255,255,255,0.08)",
+                        color: "#6b7280",
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = plan.featured
+                          ? "rgba(127,29,29,0.7)"
+                          : "rgba(255,255,255,0.18)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = plan.featured
+                          ? "rgba(127,29,29,0.35)"
+                          : "rgba(255,255,255,0.08)";
+                      }}
+                    >
+                      Details
+                    </button>
+                    <a
+                      href={`mailto:adamforbusiness01@gmail.com?subject=${encodeURIComponent(plan.emailSubject)}&body=${encodeURIComponent(plan.emailBody)}`}
+                      className="flex-1 h-11 rounded-xl text-white text-sm font-black flex items-center justify-center transition-all duration-200 hover:scale-[1.03] active:scale-[0.97]"
+                      style={{
+                        background: plan.featured
+                          ? "linear-gradient(135deg, #7f1d1d, #991b1b)"
+                          : "rgba(127,29,29,0.75)",
+                        boxShadow: plan.featured
+                          ? "0 0 24px rgba(127,29,29,0.45)"
+                          : "none",
+                      }}
+                    >
+                      Order
+                    </a>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
       </div>
 
-      {/* ── SERVICE MODALS (rendered outside main div to avoid z-index issues) ── */}
+      {/* ── PRICING MODALS ───────────────────────────────────────────────────── */}
 
-      {/* Front End Modal */}
-      <ServiceModal
-        isOpen={firstProject}
-        onClose={() => setFirstProject(false)}
-        title="Front-End Application"
-        icon="🖥️"
-        tagline="Pixel-perfect interfaces that feel alive"
-        accentFrom="#7f1d1d"
-        accentTo="#ef4444"
+      {/* Lump Sum Modal */}
+      <PricingModal
+        isOpen={lumpSumModal}
+        onClose={() => setLumpSumModal(false)}
+        title="Lump Sum"
+        icon="💼"
+        tagline="One-time payment — own it outright"
+        featured={false}
         features={[
-          {
-            icon: "📐",
-            title: "Fully responsive layouts",
-            desc: "Flawless on mobile, tablet, and desktop.",
-          },
-          {
-            icon: "🎨",
-            title: "Tailwind-powered styling",
-            desc: "Consistent, scalable, and easy to maintain.",
-          },
-          {
-            icon: "✨",
-            title: "Sleek animations",
-            desc: "Framer Motion or CSS — smooth and purposeful.",
-          },
-          {
-            icon: "🧩",
-            title: "Component-based UI",
-            desc: "Reusable, modular, clean architecture.",
-          },
-          {
-            icon: "⚡",
-            title: "Optimized performance",
-            desc: "Fast load times and lightweight assets.",
-          },
-          {
-            icon: "🔗",
-            title: "API-ready integration",
-            desc: "Seamless connection to any backend you provide.",
-          },
+          { label: "Full Design & Development", desc: "Custom-built from scratch to your vision." },
+          { label: "$25/mo Hosting", desc: "Reliable, fast hosting billed monthly after delivery." },
+          { label: "$100 per page after 5", desc: "First 5 pages included in the base price." },
+          { label: "+$50/mo Unlimited Edits add-on", desc: "Optional — keep your site fresh anytime." },
+          { label: "+$250 to add a Blog", desc: "Full blog system with CMS, add on at any time." },
+          { label: "24/7 Support", desc: "Direct line to me for any questions or issues." },
+          { label: "Lifetime Updates", desc: "Tech stack and security updates included forever." },
         ]}
-        perfect="Landing pages, portfolios, product UIs, marketing sites, modern dashboards."
-        emailSubject="Front-End Application Order"
-        emailBody={`Hi Adam,\n\nI'm interested in ordering a Front-End Application.\n\nHere are my project details:\n\n- Project name / idea:\n- Key pages / sections needed:\n- Design references (if any):\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+        note="Best for businesses that prefer a single upfront investment and want full ownership of their website from day one."
+        emailSubject="Lump Sum Website Order"
+        emailBody={"Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"}
       />
 
-      {/* Full Stack Modal */}
-      <ServiceModal
-        isOpen={secondProject}
-        onClose={() => setSecondProject(false)}
-        title="Full Stack Application"
-        icon="⚙️"
-        tagline="End-to-end products built to scale"
-        accentFrom="#7f1d1d"
-        accentTo="#f97316"
+      {/* Monthly Modal */}
+      <PricingModal
+        isOpen={monthlyModal}
+        onClose={() => setMonthlyModal(false)}
+        title="Monthly Plan"
+        icon="🔄"
+        tagline="Low entry cost — hosting and edits included"
+        featured={true}
         features={[
-          {
-            icon: "📱",
-            title: "Modern, responsive UI",
-            desc: "Great UX on every screen, every time.",
-          },
-          {
-            icon: "🔒",
-            title: "Secure backend",
-            desc: "Industry-standard practices from day one.",
-          },
-          {
-            icon: "🛠️",
-            title: "API design & integration",
-            desc: "Clean, documented, and extensible endpoints.",
-          },
-          {
-            icon: "🗄️",
-            title: "Database setup & optimization",
-            desc: "SQL or NoSQL — structured for your needs.",
-          },
-          {
-            icon: "☁️",
-            title: "Deployment & hosting",
-            desc: "Live and configured from day one.",
-          },
-          {
-            icon: "🧹",
-            title: "Clean, maintainable code",
-            desc: "Ready for future scaling and new devs.",
-          },
+          { label: "Full Design & Development", desc: "Complete custom website, no shortcuts." },
+          { label: "Hosting Included", desc: "No separate hosting bill — everything in one payment." },
+          { label: "$100 per page after 5", desc: "First 5 pages included in the monthly rate." },
+          { label: "+$250 to add a Blog", desc: "Full blog system, add it anytime." },
+          { label: "Unlimited Edits", desc: "Request changes anytime — no limits, no extra charges." },
+          { label: "24/7 Support", desc: "Direct access to me whenever you need help." },
+          { label: "Lifetime Updates", desc: "Your site stays current and secure, always." },
         ]}
-        perfect="Startups, SaaS products, dashboards, admin panels, business apps, and custom tools."
-        emailSubject="Full Stack Application Order"
-        emailBody={`Hi Adam,\n\nI'm interested in ordering a Full Stack Application.\n\nHere are my project details:\n\n- Project name / idea:\n- Frontend requirements:\n- Backend / database needs:\n- Key features:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+        note="Most popular choice — low entry cost, everything included, and the flexibility to update your site whenever you want."
+        emailSubject="Monthly Plan Order"
+        emailBody={"Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"}
       />
 
-      {/* Back End Modal */}
-      <ServiceModal
-        isOpen={thirdProject}
-        onClose={() => setThirdProject(false)}
-        title="Back-End Application"
-        icon="🛡️"
-        tagline="Robust server-side systems, built right"
-        accentFrom="#7f1d1d"
-        accentTo="#6366f1"
+      {/* Ecommerce Modal */}
+      <PricingModal
+        isOpen={ecommerceModal}
+        onClose={() => setEcommerceModal(false)}
+        title="Ecommerce"
+        icon="🛒"
+        tagline="Full Shopify store — ready to sell from day one"
+        featured={false}
         features={[
-          {
-            icon: "🔁",
-            title: "REST or GraphQL APIs",
-            desc: "Flexible, documented, and production-ready.",
-          },
-          {
-            icon: "🛡️",
-            title: "Auth & security",
-            desc: "JWT, OAuth, and role-based access systems.",
-          },
-          {
-            icon: "🗂️",
-            title: "Database design",
-            desc: "Optimized schemas for SQL or NoSQL databases.",
-          },
-          {
-            icon: "🤖",
-            title: "Server-side logic & automation",
-            desc: "Business logic handled efficiently at scale.",
-          },
-          {
-            icon: "🌐",
-            title: "Third-party integrations",
-            desc: "Payment gateways, email services, and more.",
-          },
-          {
-            icon: "🚀",
-            title: "Deployment & server setup",
-            desc: "Configured and ready for production traffic.",
-          },
+          { label: "Custom Shopify Store", desc: "Fully designed and built on Shopify, tailored to your brand." },
+          { label: "Configure Any & All Apps", desc: "Reviews, upsells, loyalty, email — every app set up for you." },
+          { label: "Integrated Shipping", desc: "Shipping rates, carriers, and tracking fully configured." },
+          { label: "Shopify Tutorial Walkthrough", desc: "I walk you through managing your own store hands-on." },
+          { label: "Fully Editable in Shopify CMS", desc: "You control products, collections, and content yourself." },
+          { label: "+$50/mo Unlimited Edits add-on", desc: "Optional — have me handle all ongoing changes for you." },
+          { label: "24/7 Support", desc: "Direct access for any questions after launch." },
         ]}
-        perfect="Complex logic systems, API-only projects, SaaS backends, and service infrastructures."
-        emailSubject="Back-End Application Order"
-        emailBody={`Hi Adam,\n\nI'm interested in ordering a Back-End Application.\n\nHere are my project details:\n\n- Project name / idea:\n- API requirements:\n- Database preferences:\n- Authentication needs:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
-      />
-
-      {/* Custom Request Modal */}
-      <ServiceModal
-        isOpen={fourthProject}
-        onClose={() => setFourthProject(false)}
-        title="Custom Request"
-        icon="💡"
-        tagline="Your vision, built your way"
-        accentFrom="#7f1d1d"
-        accentTo="#10b981"
-        features={[
-          {
-            icon: "🎛️",
-            title: "Any feature or component",
-            desc: "Animations, dashboards, tools, widgets — you name it.",
-          },
-          {
-            icon: "🔌",
-            title: "API & service integrations",
-            desc: "Connect to any API, database, or third-party service.",
-          },
-          {
-            icon: "🛠️",
-            title: "Fixes, refactors & audits",
-            desc: "Clean up, speed up, and improve existing code.",
-          },
-          {
-            icon: "🧪",
-            title: "Experimental ideas",
-            desc: "If you can dream it, we can build it.",
-          },
-          {
-            icon: "🔄",
-            title: "Flexible project scope",
-            desc: "Small task or large — I adapt to your goals.",
-          },
-          {
-            icon: "📦",
-            title: "One-off deliverables",
-            desc: "No long contracts — just clean, delivered work.",
-          },
-        ]}
-        perfect="One-off tasks, unique requirements, experimental ideas, or anything outside standard packages."
-        emailSubject="Custom Development Request"
-        emailBody={`Hi Adam,\n\nI have a custom development request.\n\nHere are the details:\n\n- What I need:\n- Tech stack / preferences (if any):\n- Rough scope / size:\n- Deadline:\n- Budget range:\n\nLooking forward to hearing from you!`}
+        note="Pricing starts at $5,000 and varies based on the number of products, apps required, and custom functionality needed."
+        emailSubject="Ecommerce Store Order"
+        emailBody={"Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Apps needed (if known):\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!"}
       />
     </>
   );
