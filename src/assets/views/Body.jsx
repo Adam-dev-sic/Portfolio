@@ -37,6 +37,7 @@ const PROJECTS = [
   {
     title: "Foraged Fare",
     href: "https://foraged-fare-pu97nd30m-adams-projects-7c5b4675.vercel.app/",
+    image: "/images/foraged.png",
     description:
       "Foraged Fare is a fully responsive website featuring a emnu section along with food photography, a location and contact section, along with a table reservation feature and a warm dining atmosphere brought to life through modern design. Built to help restaurants attract customers and showcase their food and ambiance online.",
     tech: [
@@ -47,6 +48,8 @@ const PROJECTS = [
   {
     title: "Golden Orchard",
     href: "https://golden-orchard-5o2q.vercel.app/index.html",
+    image: "/images/golden.png",
+
     description:
       "Golden Orchard is a fully responsive website featuring a menu section along with food photography, and a warm dining atmosphere brought to life through modern design. Built to help restaurants attract customers and showcase their food and ambiance online.",
     tech: [
