@@ -45,9 +45,9 @@ function Navbar() {
                   : "opacity-0"
               }`}
             >
-              <h1 className="text-4xl text-white font-black">Adam Yakoub</h1>
+              <h1 className="text-4xl text-white font-black">Apex Flow</h1>
               <h1 className="text-lg font-black text-red-900">
-                F.S Web Developer
+                Web Dev Agency
               </h1>
             </div>
             <div

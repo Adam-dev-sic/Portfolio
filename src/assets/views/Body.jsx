@@ -1,3 +1,4 @@
+import { title } from "process";
 import React, { useEffect, useRef, useState } from "react";
 
 function useInView(threshold = 0.1) {
@@ -34,6 +35,27 @@ const PROJECTS = [
     ],
   },
   {
+    title: "Foraged Fare",
+    href: "https://foraged-fare-pu97nd30m-adams-projects-7c5b4675.vercel.app/",
+    description:
+      "Foraged Fare is a fully responsive website featuring a emnu section along with food photography, a location and contact section, along with a table reservation feature and a warm dining atmosphere brought to life through modern design. Built to help restaurants attract customers and showcase their food and ambiance online.",
+    tech: [
+      { label: "HTML", color: "text-orange-500" },
+      { label: "CSS", color: "text-blue-500" },
+    ],
+  },
+  {
+    title: "Golden Orchard",
+    href: "https://golden-orchard-5o2q.vercel.app/index.html",
+    description:
+      "Golden Orchard is a fully responsive website featuring a menu section along with food photography, and a warm dining atmosphere brought to life through modern design. Built to help restaurants attract customers and showcase their food and ambiance online.",
+    tech: [
+      { label: "HTML", color: "text-orange-500" },
+      { label: "CSS", color: "text-blue-500" },
+    ],
+  },
+
+  {
     title: "Marketing Agency",
     href: "https://digital-agency-webpage-ten.vercel.app/",
     image: "/images/marketix.png",
@@ -45,6 +67,7 @@ const PROJECTS = [
       { label: "React", color: "text-cyan-400" },
     ],
   },
+
   {
     title: "Netflix Copy",
     href: "https://netflix-by-me-ivory.vercel.app/",
@@ -161,7 +184,18 @@ function ProjectRow({ project, index, visible }) {
 }
 
 // ─── Pricing Modal ────────────────────────────────────────────────────────────
-function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, emailSubject, emailBody, featured }) {
+function PricingModal({
+  isOpen,
+  onClose,
+  title,
+  icon,
+  tagline,
+  features,
+  note,
+  emailSubject,
+  emailBody,
+  featured,
+}) {
   if (!isOpen) return null;
   const mailtoLink = `mailto:adamforbusiness01@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
 
@@ -170,7 +204,10 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
       className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ animation: "backdropIn 0.3s ease forwards" }}
     >
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+        onClick={onClose}
+      />
       <div
         className="relative z-10 w-[92%] max-w-md max-h-[90vh] overflow-y-auto rounded-2xl border shadow-2xl flex flex-col"
         style={{
@@ -192,18 +229,30 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
         />
 
         {/* Header */}
-        <div className="px-7 pt-8 pb-5 border-b" style={{ borderColor: featured ? "rgba(127,29,29,0.2)" : "rgba(255,255,255,0.05)" }}>
+        <div
+          className="px-7 pt-8 pb-5 border-b"
+          style={{
+            borderColor: featured
+              ? "rgba(127,29,29,0.2)"
+              : "rgba(255,255,255,0.05)",
+          }}
+        >
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-4">
               <div
                 className="w-11 h-11 rounded-xl flex items-center justify-center text-xl flex-shrink-0"
-                style={{ background: "rgba(127,29,29,0.2)", border: "1px solid rgba(127,29,29,0.35)" }}
+                style={{
+                  background: "rgba(127,29,29,0.2)",
+                  border: "1px solid rgba(127,29,29,0.35)",
+                }}
               >
                 {icon}
               </div>
               <div>
                 <h2 className="text-xl font-black text-white">{title}</h2>
-                <p className="text-xs text-gray-500 mt-0.5 font-medium">{tagline}</p>
+                <p className="text-xs text-gray-500 mt-0.5 font-medium">
+                  {tagline}
+                </p>
               </div>
             </div>
             <button
@@ -211,7 +260,12 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
               className="text-gray-600 hover:text-white transition-colors mt-1 flex-shrink-0 hover:cursor-pointer"
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                <path
+                  d="M18 6L6 18M6 6l12 12"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
               </svg>
             </button>
           </div>
@@ -223,12 +277,20 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
             <div
               key={i}
               className="flex items-start gap-3"
-              style={{ animation: `featureIn 0.3s ease ${0.08 + i * 0.05}s both` }}
+              style={{
+                animation: `featureIn 0.3s ease ${0.08 + i * 0.05}s both`,
+              }}
             >
-              <span className="text-red-600 mt-0.5 flex-shrink-0 font-black text-sm">✓</span>
+              <span className="text-red-600 mt-0.5 flex-shrink-0 font-black text-sm">
+                ✓
+              </span>
               <div>
-                <span className="text-white font-semibold text-sm">{f.label}</span>
-                {f.desc && <p className="text-gray-500 text-xs mt-0.5">{f.desc}</p>}
+                <span className="text-white font-semibold text-sm">
+                  {f.label}
+                </span>
+                {f.desc && (
+                  <p className="text-gray-500 text-xs mt-0.5">{f.desc}</p>
+                )}
               </div>
             </div>
           ))}
@@ -238,7 +300,10 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
         {note && (
           <div
             className="mx-7 mb-5 rounded-xl p-3.5"
-            style={{ background: "rgba(127,29,29,0.08)", border: "1px solid rgba(127,29,29,0.18)" }}
+            style={{
+              background: "rgba(127,29,29,0.08)",
+              border: "1px solid rgba(127,29,29,0.18)",
+            }}
           >
             <p className="text-gray-400 text-xs font-medium">{note}</p>
           </div>
@@ -263,7 +328,13 @@ function PricingModal({ isOpen, onClose, title, icon, tagline, features, note, e
             }}
           >
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
             Order Now
           </a>
@@ -315,10 +386,14 @@ function Body() {
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [lumpSumModal, monthlyModal, ecommerceModal]);
 
-  useEffect(() => { setLoaded(true); }, []);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   // ── Pricing card data ─────────────────────────────────────────────────────
   const PLANS = [
@@ -340,7 +415,8 @@ function Body() {
       ],
       onDetails: () => setLumpSumModal(true),
       emailSubject: "Lump Sum Website Order",
-      emailBody: "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
+      emailBody:
+        "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
     },
     {
       key: "monthly",
@@ -361,7 +437,8 @@ function Body() {
       ],
       onDetails: () => setMonthlyModal(true),
       emailSubject: "Monthly Plan Order",
-      emailBody: "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!",
+      emailBody:
+        "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!",
     },
     {
       key: "ecommerce",
@@ -381,7 +458,8 @@ function Body() {
       ],
       onDetails: () => setEcommerceModal(true),
       emailSubject: "Ecommerce Store Order",
-      emailBody: "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!",
+      emailBody:
+        "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!",
     },
   ];
 
@@ -428,47 +506,78 @@ function Body() {
                 />
               </div>
             </div>
+            {/* Add this to your index.html or equivalent — inside <head> */}
+            {/* <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" /> */}
+
             <div
-              id="About me card"
-              className="text-white lg:w-[55%] w-full p-10 h-full text-center"
+              id="About Apex Flow"
+              className="text-white lg:w-[60%] w-full px-10 py-14 h-full text-center"
+              style={{ fontFamily: "'Sora', sans-serif" }}
             >
-              <span className="flex flex-col space-y-2">
-                <h1 className="text-4xl text-white font-bold">
-                  Who<span className="text-red-900 font-black"> I'm I</span>
+              <span className="flex flex-col items-center space-y-6">
+                {/* Eyebrow label */}
+                <span className="flex items-center gap-3 text-[0.6rem] tracking-[0.35em] uppercase text-gray-500 font-medium">
+                  <span className="w-8 h-px bg-gray-700 inline-block" />
+                  Who We Are
+                  <span className="w-8 h-px bg-gray-700 inline-block" />
+                </span>
+
+                {/* Headline */}
+                <h1 className="text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight">
+                  We Are{" "}
+                  <span
+                    className="text-red-900 inline-block relative"
+                    style={{
+                      textShadow: "0 0 60px rgba(127,29,29,0.35)",
+                    }}
+                  >
+                    Apex Flow
+                  </span>
                 </h1>
-                <p className="text-lg font-bold">
-                  Hi, My name is{" "}
-                  <span className="text-red-900 font-black">Adam</span>, a very
-                  passionate and ambitious{" "}
-                  <span className="text-red-900 font-black">
-                    Software Developer{" "}
+
+                {/* Divider accent */}
+                <span className="w-12 h-[2px] bg-red-900 rounded-full opacity-70" />
+
+                {/* Body text */}
+                <p
+                  className="text-[1rem] leading-[1.95] font-light max-w-xl mx-auto"
+                  style={{ color: "#b0a9a0" }}
+                >
+                  A{" "}
+                  <span className="text-white font-semibold">
+                    professional web development studio
                   </span>{" "}
-                  always looking to provide a
-                  <span className="bg-linear-to-b from-[#5A5A5A] via-[#E5E5E5] to-[#FFFFFF] bg-clip-text text-transparent">
-                    {" "}
-                    clean, professional and excellent work{" "}
-                  </span>
-                  , I have 3 years of experience when it comes to{" "}
-                  <span className="text-red-900 font-black">
-                    {" "}
-                    Web Developement{" "}
-                  </span>{" "}
-                  industry I learned many skills throughout my journey and I
-                  will handle any task given to me and adapt no matter the
-                  difficulty, I will help you get a fully{" "}
-                  <span className="font-black">
-                    {" "}
-                    Dynamic,Functioning Appealing Website{" "}
-                  </span>
-                  that will make you{" "}
-                  <span className="font-black drop-shadow-[0_0_10px_rgba(255,255,255,0.25)] border-b border-white">
-                    {" "}
-                    reach the results and vision you are Dreaming Of.{" "}
-                  </span>{" "}
+                  built on one conviction — that every business deserves a
+                  digital presence that truly reflects its quality.
                   <br />
-                  <div className="text-gray-600 font-semibold mt-1">
-                    Make Your Dreams Come True!
-                  </div>
+                  <br />
+                  We craft{" "}
+                  <span
+                    className="font-semibold"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #9ca3af, #e5e7eb, #ffffff)",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    clean, high-performance web applications
+                  </span>{" "}
+                  — from sleek front-end interfaces to full-stack platforms —
+                  with precision, care, and a relentless focus on results.
+                  Whether you need a landing page or a complex custom system, we
+                  handle it{" "}
+                  <span className="text-white font-semibold">
+                    end to end, without compromise.
+                  </span>
+                </p>
+
+                {/* Tagline */}
+                <p
+                  className="text-[0.7rem] tracking-[0.25em] uppercase font-medium mt-2"
+                  style={{ color: "#4b3030" }}
+                >
+                  Built Different. Delivered Right.
                 </p>
               </span>
             </div>
@@ -608,7 +717,13 @@ function Body() {
               }`}
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M15 18L9 12L15 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
               Previous
             </button>
@@ -638,7 +753,13 @@ function Body() {
             >
               Next
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path
+                  d="M9 18L15 12L9 6"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </button>
           </div>
@@ -658,8 +779,11 @@ function Body() {
           </div>
 
           {/* Subtitle */}
-          <p className={`text-center text-gray-500 text-sm font-medium mt-3 transition-opacity duration-700 ${servicesTextInView ? "opacity-100" : "opacity-0"}`}>
-            Choose a plan that fits your needs — all include professional delivery and full support.
+          <p
+            className={`text-center text-gray-500 text-sm font-medium mt-3 transition-opacity duration-700 ${servicesTextInView ? "opacity-100" : "opacity-0"}`}
+          >
+            Choose a plan that fits your needs — all include professional
+            delivery and full support.
           </p>
 
           {/* Pricing cards */}
@@ -677,13 +801,17 @@ function Body() {
                     background: plan.featured
                       ? "linear-gradient(160deg, #130a0c 0%, #0d0608 60%, #110a0e 100%)"
                       : "#0A0E16",
-                    border: plan.featured ? "2px solid #7f1d1d" : "1px solid #1e2433",
+                    border: plan.featured
+                      ? "2px solid #7f1d1d"
+                      : "1px solid #1e2433",
                     boxShadow: plan.featured
                       ? "0 0 60px rgba(127,29,29,0.25), inset 0 0 60px rgba(127,29,29,0.03)"
                       : "none",
                     opacity: servicesInView ? 1 : 0,
                     transform: servicesInView
-                      ? plan.featured ? "translateY(-12px)" : "translateY(0)"
+                      ? plan.featured
+                        ? "translateY(-12px)"
+                        : "translateY(0)"
                       : "translateY(24px)",
                     transition: `opacity 0.6s ease ${delay}s, transform 0.6s ease ${delay}s`,
                   }}
@@ -694,7 +822,8 @@ function Body() {
                       <span
                         className="text-white text-xs font-black px-5 py-1.5 rounded-full uppercase tracking-widest whitespace-nowrap"
                         style={{
-                          background: "linear-gradient(135deg, #7f1d1d, #991b1b)",
+                          background:
+                            "linear-gradient(135deg, #7f1d1d, #991b1b)",
                           boxShadow: "0 0 24px rgba(127,29,29,0.7)",
                         }}
                       >
@@ -722,7 +851,9 @@ function Body() {
                     >
                       {plan.label}
                     </p>
-                    <h2 className="text-white font-black text-2xl">{plan.title}</h2>
+                    <h2 className="text-white font-black text-2xl">
+                      {plan.title}
+                    </h2>
 
                     {/* Price */}
                     <div className="flex items-end gap-2 mt-4">
@@ -733,7 +864,9 @@ function Body() {
                         {plan.price}
                       </span>
                     </div>
-                    <p className="text-gray-600 text-xs mt-1 font-medium">{plan.sub}</p>
+                    <p className="text-gray-600 text-xs mt-1 font-medium">
+                      {plan.sub}
+                    </p>
                   </div>
 
                   {/* Divider */}
@@ -752,13 +885,17 @@ function Body() {
                       <li key={i} className="flex items-start gap-2.5">
                         <span
                           className="flex-shrink-0 mt-0.5 font-black text-sm"
-                          style={{ color: plan.featured ? "#ef4444" : "#7f1d1d" }}
+                          style={{
+                            color: plan.featured ? "#ef4444" : "#7f1d1d",
+                          }}
                         >
                           ✓
                         </span>
                         <span
                           className="text-sm font-medium"
-                          style={{ color: plan.featured ? "#e5e7eb" : "#9ca3af" }}
+                          style={{
+                            color: plan.featured ? "#e5e7eb" : "#9ca3af",
+                          }}
                         >
                           {f}
                         </span>
@@ -823,17 +960,40 @@ function Body() {
         tagline="One-time payment — own it outright"
         featured={false}
         features={[
-          { label: "Full Design & Development", desc: "Custom-built from scratch to your vision." },
-          { label: "$25/mo Hosting", desc: "Reliable, fast hosting billed monthly after delivery." },
-          { label: "$100 per page after 5", desc: "First 5 pages included in the base price." },
-          { label: "+$50/mo Unlimited Edits add-on", desc: "Optional — keep your site fresh anytime." },
-          { label: "+$250 to add a Blog", desc: "Full blog system with CMS, add on at any time." },
-          { label: "24/7 Support", desc: "Direct line to me for any questions or issues." },
-          { label: "Lifetime Updates", desc: "Tech stack and security updates included forever." },
+          {
+            label: "Full Design & Development",
+            desc: "Custom-built from scratch to your vision.",
+          },
+          {
+            label: "$25/mo Hosting",
+            desc: "Reliable, fast hosting billed monthly after delivery.",
+          },
+          {
+            label: "$100 per page after 5",
+            desc: "First 5 pages included in the base price.",
+          },
+          {
+            label: "+$50/mo Unlimited Edits add-on",
+            desc: "Optional — keep your site fresh anytime.",
+          },
+          {
+            label: "+$250 to add a Blog",
+            desc: "Full blog system with CMS, add on at any time.",
+          },
+          {
+            label: "24/7 Support",
+            desc: "Direct line to me for any questions or issues.",
+          },
+          {
+            label: "Lifetime Updates",
+            desc: "Tech stack and security updates included forever.",
+          },
         ]}
         note="Best for businesses that prefer a single upfront investment and want full ownership of their website from day one."
         emailSubject="Lump Sum Website Order"
-        emailBody={"Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"}
+        emailBody={
+          "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"
+        }
       />
 
       {/* Monthly Modal */}
@@ -845,17 +1005,40 @@ function Body() {
         tagline="Low entry cost — hosting and edits included"
         featured={true}
         features={[
-          { label: "Full Design & Development", desc: "Complete custom website, no shortcuts." },
-          { label: "Hosting Included", desc: "No separate hosting bill — everything in one payment." },
-          { label: "$100 per page after 5", desc: "First 5 pages included in the monthly rate." },
-          { label: "+$250 to add a Blog", desc: "Full blog system, add it anytime." },
-          { label: "Unlimited Edits", desc: "Request changes anytime — no limits, no extra charges." },
-          { label: "24/7 Support", desc: "Direct access to me whenever you need help." },
-          { label: "Lifetime Updates", desc: "Your site stays current and secure, always." },
+          {
+            label: "Full Design & Development",
+            desc: "Complete custom website, no shortcuts.",
+          },
+          {
+            label: "Hosting Included",
+            desc: "No separate hosting bill — everything in one payment.",
+          },
+          {
+            label: "$100 per page after 5",
+            desc: "First 5 pages included in the monthly rate.",
+          },
+          {
+            label: "+$250 to add a Blog",
+            desc: "Full blog system, add it anytime.",
+          },
+          {
+            label: "Unlimited Edits",
+            desc: "Request changes anytime — no limits, no extra charges.",
+          },
+          {
+            label: "24/7 Support",
+            desc: "Direct access to me whenever you need help.",
+          },
+          {
+            label: "Lifetime Updates",
+            desc: "Your site stays current and secure, always.",
+          },
         ]}
         note="Most popular choice — low entry cost, everything included, and the flexibility to update your site whenever you want."
         emailSubject="Monthly Plan Order"
-        emailBody={"Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"}
+        emailBody={
+          "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"
+        }
       />
 
       {/* Ecommerce Modal */}
@@ -867,17 +1050,40 @@ function Body() {
         tagline="Full Shopify store — ready to sell from day one"
         featured={false}
         features={[
-          { label: "Custom Shopify Store", desc: "Fully designed and built on Shopify, tailored to your brand." },
-          { label: "Configure Any & All Apps", desc: "Reviews, upsells, loyalty, email — every app set up for you." },
-          { label: "Integrated Shipping", desc: "Shipping rates, carriers, and tracking fully configured." },
-          { label: "Shopify Tutorial Walkthrough", desc: "I walk you through managing your own store hands-on." },
-          { label: "Fully Editable in Shopify CMS", desc: "You control products, collections, and content yourself." },
-          { label: "+$50/mo Unlimited Edits add-on", desc: "Optional — have me handle all ongoing changes for you." },
-          { label: "24/7 Support", desc: "Direct access for any questions after launch." },
+          {
+            label: "Custom Shopify Store",
+            desc: "Fully designed and built on Shopify, tailored to your brand.",
+          },
+          {
+            label: "Configure Any & All Apps",
+            desc: "Reviews, upsells, loyalty, email — every app set up for you.",
+          },
+          {
+            label: "Integrated Shipping",
+            desc: "Shipping rates, carriers, and tracking fully configured.",
+          },
+          {
+            label: "Shopify Tutorial Walkthrough",
+            desc: "I walk you through managing your own store hands-on.",
+          },
+          {
+            label: "Fully Editable in Shopify CMS",
+            desc: "You control products, collections, and content yourself.",
+          },
+          {
+            label: "+$50/mo Unlimited Edits add-on",
+            desc: "Optional — have me handle all ongoing changes for you.",
+          },
+          {
+            label: "24/7 Support",
+            desc: "Direct access for any questions after launch.",
+          },
         ]}
         note="Pricing starts at $5,000 and varies based on the number of products, apps required, and custom functionality needed."
         emailSubject="Ecommerce Store Order"
-        emailBody={"Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Apps needed (if known):\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!"}
+        emailBody={
+          "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Apps needed (if known):\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!"
+        }
       />
     </>
   );
