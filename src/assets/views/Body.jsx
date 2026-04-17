@@ -365,9 +365,9 @@ function Body() {
   const [servicesRef, servicesInView] = useInView(0.1);
 
   // ── Modal states ──────────────────────────────────────────────────────────
+  const [starterModal, setStarterModal] = useState(false);
+  const [growthModal, setGrowthModal] = useState(false);
   const [lumpSumModal, setLumpSumModal] = useState(false);
-  const [monthlyModal, setMonthlyModal] = useState(false);
-  const [ecommerceModal, setEcommerceModal] = useState(false);
 
   // ── Pagination state ──────────────────────────────────────────────────────
   const [activePage, setActivePage] = useState(0);
@@ -384,7 +384,7 @@ function Body() {
   }
 
   useEffect(() => {
-    if (lumpSumModal || monthlyModal || ecommerceModal) {
+    if (starterModal || growthModal || lumpSumModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -392,7 +392,7 @@ function Body() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [lumpSumModal, monthlyModal, ecommerceModal]);
+  }, [starterModal, growthModal, lumpSumModal]);
 
   useEffect(() => {
     setLoaded(true);
@@ -401,68 +401,70 @@ function Body() {
   // ── Pricing card data ─────────────────────────────────────────────────────
   const PLANS = [
     {
+      key: "starter",
+      label: "Starter",
+      title: "Starter",
+      price: "$150",
+      sub: "/month — hosting included",
+      featured: false,
+      features: [
+        "Website Design & Development",
+        "Hosting Included",
+        "Up to 5 Pages",
+        "Mobile Friendly & Fast",
+        "SEO Optimized on Launch",
+        "Monthly Maintenance",
+        "Minor Monthly Updates",
+        "24/7 Support",
+      ],
+      onDetails: () => setStarterModal(true),
+      emailSubject: "Starter Plan Order",
+      emailBody:
+        "Hi Adam,\n\nI'm interested in the Starter plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
+    },
+    {
+      key: "growth",
+      label: "Recommended",
+      title: "Growth",
+      price: "$250",
+      sub: "/month — hosting included",
+      featured: true,
+      badge: "★ Most Popular",
+      features: [
+        "Everything in Starter",
+        "Monthly SEO Monitoring",
+        "Google Search Console Management",
+        "Keyword Ranking Tracking",
+        "Monthly Performance Report",
+        "Unlimited Edits",
+        "24/7 Support",
+      ],
+      onDetails: () => setGrowthModal(true),
+      emailSubject: "Growth Plan Order",
+      emailBody:
+        "Hi Adam,\n\nI'm interested in the Growth plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
+    },
+    {
       key: "lumpsum",
       label: "One-Time",
       title: "Lump Sum",
-      price: "$2,800",
+      price: "$1,000",
       sub: "+ $25/mo hosting",
       featured: false,
       features: [
-        "Design & Development",
+        "Full Website Design & Development",
+        "Up to 5 Pages",
+        "Mobile Friendly & Fast",
+        "SEO Optimized on Launch",
         "$25/mo Hosting",
-        "$100 fee per page after 5",
-        "+$50/mo Unlimited Edits (add-on)",
-        "+$250 to add a Blog",
-        "24/7 Support",
+        "$100 per page after 5",
         "Lifetime Updates",
+        "24/7 Support",
       ],
       onDetails: () => setLumpSumModal(true),
       emailSubject: "Lump Sum Website Order",
       emailBody:
         "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!",
-    },
-    {
-      key: "monthly",
-      label: "Recommended",
-      title: "Monthly",
-      price: "$150",
-      sub: "/month — hosting included",
-      featured: true,
-      badge: "★ Most Popular",
-      features: [
-        "Design & Development",
-        "Hosting Included",
-        "$100 fee per page after 5",
-        "+$250 to add a Blog",
-        "Unlimited Edits",
-        "24/7 Support",
-        "Lifetime Updates",
-      ],
-      onDetails: () => setMonthlyModal(true),
-      emailSubject: "Monthly Plan Order",
-      emailBody:
-        "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!",
-    },
-    {
-      key: "ecommerce",
-      label: "E-Commerce",
-      title: "Ecommerce",
-      price: "$5k",
-      sub: "starting",
-      featured: false,
-      features: [
-        "Custom Shopify Store",
-        "Configure Any & All Apps",
-        "Integrated Shipping",
-        "Shopify Tutorial Walkthrough",
-        "Fully Editable in Shopify CMS",
-        "+$50/mo Unlimited Edits (add-on)",
-        "24/7 Support",
-      ],
-      onDetails: () => setEcommerceModal(true),
-      emailSubject: "Ecommerce Store Order",
-      emailBody:
-        "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!",
     },
   ];
 
@@ -509,8 +511,6 @@ function Body() {
                 />
               </div>
             </div>
-            {/* Add this to your index.html or equivalent — inside <head> */}
-            {/* <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&display=swap" rel="stylesheet" /> */}
 
             <div
               id="About Apex Flow"
@@ -954,6 +954,100 @@ function Body() {
 
       {/* ── PRICING MODALS ───────────────────────────────────────────────────── */}
 
+      {/* Starter Modal */}
+      <PricingModal
+        isOpen={starterModal}
+        onClose={() => setStarterModal(false)}
+        title="Starter Plan"
+        icon="🚀"
+        tagline="Everything you need to get online"
+        featured={false}
+        features={[
+          {
+            label: "Website Design & Development",
+            desc: "Custom-built from scratch to match your brand.",
+          },
+          {
+            label: "Hosting Included",
+            desc: "No separate hosting bill — everything in one payment.",
+          },
+          {
+            label: "Up to 5 Pages",
+            desc: "Home, Menu, About, Contact, Gallery — whatever you need.",
+          },
+          {
+            label: "Mobile Friendly & Fast",
+            desc: "Looks great on phones, tablets, and desktops.",
+          },
+          {
+            label: "SEO Optimized on Launch",
+            desc: "Built correctly from day one so Google can find you.",
+          },
+          {
+            label: "Monthly Maintenance",
+            desc: "Technical upkeep handled — your site stays running smoothly.",
+          },
+          {
+            label: "Minor Monthly Updates",
+            desc: "Small content changes included each month.",
+          },
+          {
+            label: "24/7 Support",
+            desc: "Direct line to me for any questions or issues.",
+          },
+        ]}
+        note="Best for businesses that want a clean, professional website up and running without the hassle of managing it themselves."
+        emailSubject="Starter Plan Order"
+        emailBody={
+          "Hi Adam,\n\nI'm interested in the Starter plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!"
+        }
+      />
+
+      {/* Growth Modal */}
+      <PricingModal
+        isOpen={growthModal}
+        onClose={() => setGrowthModal(false)}
+        title="Growth Plan"
+        icon="📈"
+        tagline="Get found. Get more customers."
+        featured={true}
+        features={[
+          {
+            label: "Everything in Starter",
+            desc: "Full design, development, hosting, and maintenance included.",
+          },
+          {
+            label: "Monthly SEO Monitoring",
+            desc: "We actively track and improve your Google rankings every month.",
+          },
+          {
+            label: "Google Search Console Management",
+            desc: "We monitor errors, indexing issues, and search performance.",
+          },
+          {
+            label: "Keyword Ranking Tracking",
+            desc: "See exactly where you rank for searches that matter to your business.",
+          },
+          {
+            label: "Monthly Performance Report",
+            desc: "Clear summary of your traffic, rankings, and improvements.",
+          },
+          {
+            label: "Unlimited Edits",
+            desc: "Request any changes anytime — no limits, no extra charges.",
+          },
+          {
+            label: "24/7 Support",
+            desc: "Direct access to me whenever you need help.",
+          },
+        ]}
+        note="Most popular choice — everything in Starter plus active monthly SEO work to push you above your competitors on Google."
+        emailSubject="Growth Plan Order"
+        emailBody={
+          "Hi Adam,\n\nI'm interested in the Growth plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!"
+        }
+      />
+
       {/* Lump Sum Modal */}
       <PricingModal
         isOpen={lumpSumModal}
@@ -964,8 +1058,20 @@ function Body() {
         featured={false}
         features={[
           {
-            label: "Full Design & Development",
+            label: "Full Website Design & Development",
             desc: "Custom-built from scratch to your vision.",
+          },
+          {
+            label: "Up to 5 Pages",
+            desc: "Home, Menu, About, Contact, Gallery — whatever you need.",
+          },
+          {
+            label: "Mobile Friendly & Fast",
+            desc: "Looks great on all devices.",
+          },
+          {
+            label: "SEO Optimized on Launch",
+            desc: "Built correctly from day one so Google can find you.",
           },
           {
             label: "$25/mo Hosting",
@@ -973,119 +1079,21 @@ function Body() {
           },
           {
             label: "$100 per page after 5",
-            desc: "First 5 pages included in the base price.",
-          },
-          {
-            label: "+$50/mo Unlimited Edits add-on",
-            desc: "Optional — keep your site fresh anytime.",
-          },
-          {
-            label: "+$250 to add a Blog",
-            desc: "Full blog system with CMS, add on at any time.",
-          },
-          {
-            label: "24/7 Support",
-            desc: "Direct line to me for any questions or issues.",
+            desc: "Need more pages? Easy to add on.",
           },
           {
             label: "Lifetime Updates",
             desc: "Tech stack and security updates included forever.",
           },
+          {
+            label: "24/7 Support",
+            desc: "Direct line to me for any questions or issues.",
+          },
         ]}
         note="Best for businesses that prefer a single upfront investment and want full ownership of their website from day one."
         emailSubject="Lump Sum Website Order"
         emailBody={
-          "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"
-        }
-      />
-
-      {/* Monthly Modal */}
-      <PricingModal
-        isOpen={monthlyModal}
-        onClose={() => setMonthlyModal(false)}
-        title="Monthly Plan"
-        icon="🔄"
-        tagline="Low entry cost — hosting and edits included"
-        featured={true}
-        features={[
-          {
-            label: "Full Design & Development",
-            desc: "Complete custom website, no shortcuts.",
-          },
-          {
-            label: "Hosting Included",
-            desc: "No separate hosting bill — everything in one payment.",
-          },
-          {
-            label: "$100 per page after 5",
-            desc: "First 5 pages included in the monthly rate.",
-          },
-          {
-            label: "+$250 to add a Blog",
-            desc: "Full blog system, add it anytime.",
-          },
-          {
-            label: "Unlimited Edits",
-            desc: "Request changes anytime — no limits, no extra charges.",
-          },
-          {
-            label: "24/7 Support",
-            desc: "Direct access to me whenever you need help.",
-          },
-          {
-            label: "Lifetime Updates",
-            desc: "Your site stays current and secure, always.",
-          },
-        ]}
-        note="Most popular choice — low entry cost, everything included, and the flexibility to update your site whenever you want."
-        emailSubject="Monthly Plan Order"
-        emailBody={
-          "Hi Adam,\n\nI'm interested in the Monthly plan.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Blog needed (yes/no):\n- Deadline:\n\nLooking forward to hearing from you!"
-        }
-      />
-
-      {/* Ecommerce Modal */}
-      <PricingModal
-        isOpen={ecommerceModal}
-        onClose={() => setEcommerceModal(false)}
-        title="Ecommerce"
-        icon="🛒"
-        tagline="Full Shopify store — ready to sell from day one"
-        featured={false}
-        features={[
-          {
-            label: "Custom Shopify Store",
-            desc: "Fully designed and built on Shopify, tailored to your brand.",
-          },
-          {
-            label: "Configure Any & All Apps",
-            desc: "Reviews, upsells, loyalty, email — every app set up for you.",
-          },
-          {
-            label: "Integrated Shipping",
-            desc: "Shipping rates, carriers, and tracking fully configured.",
-          },
-          {
-            label: "Shopify Tutorial Walkthrough",
-            desc: "I walk you through managing your own store hands-on.",
-          },
-          {
-            label: "Fully Editable in Shopify CMS",
-            desc: "You control products, collections, and content yourself.",
-          },
-          {
-            label: "+$50/mo Unlimited Edits add-on",
-            desc: "Optional — have me handle all ongoing changes for you.",
-          },
-          {
-            label: "24/7 Support",
-            desc: "Direct access for any questions after launch.",
-          },
-        ]}
-        note="Pricing starts at $5,000 and varies based on the number of products, apps required, and custom functionality needed."
-        emailSubject="Ecommerce Store Order"
-        emailBody={
-          "Hi Adam,\n\nI'm interested in the Ecommerce package.\n\nProject details:\n\n- Business name:\n- Products / niche:\n- Estimated number of products:\n- Apps needed (if known):\n- Deadline:\n- Budget:\n\nLooking forward to hearing from you!"
+          "Hi Adam,\n\nI'm interested in the Lump Sum package.\n\nProject details:\n\n- Business name:\n- Website type:\n- Number of pages:\n- Deadline:\n\nLooking forward to hearing from you!"
         }
       />
     </>
